@@ -1,0 +1,184 @@
+﻿Question Number,Name,Tags,Time,总结,Complexity,Link
+1," Two Sum","Array, HashMap",2mins,,"Time: O(n), Space: O(n)",
+121,Best Time to Buy and Sell Stock,"Array, Greedy",5mins,,"Time: O(n), Space: O(1)",
+238,Product of Array Except Self,"Array, PrefixProduct, SuffixProduct",10mins,,"Time: O(n), Space: O(n)",
+53,Maximum Subarray,"Array, DP",20mins,"Key Point: prefix sum ≥ 0, we need to sum it up with the current number since we probably are able to make the sum bigger","Time: O(n), Space: O(n)",
+152,Maximum Product Subarray,"Array, DP",需要再次巩固,1. dp[i] -> 包含num[i]能形成的最大值与最小值 2. 自成一体 或者 和之前的结合,"Time: O(n), Space: O(n)",https://leetcode.com/problems/maximum-product-subarray/description/
+153,Find Minimum in Rotated Sorted Array,"Array, BinarySearch",牢记模版 (find pivot),"1. while (left < right) 2. nums[mid] vs nums[right] 3. left = mid + 1, right = mid","Time: O(logn), Space: O(1)",https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/
+852,Peak Index in a Mountain Array,"Array, BinarySearch",牢记模版 (find mountain summit),"1. while (left < right) 2. nums[mid] vs nums[mid + 1] 3. left = mid + 1, right = mid","Time: O(logn), Space: O(1)",https://leetcode.com/problems/peak-index-in-a-mountain-array/description/
+33,Search in Rotated Sorted Array,"Array, BinarySearch",find pivot combined with standard binary search,,"Time: O(logn), Space: O(1)",https://leetcode.com/problems/search-in-rotated-sorted-array/description/
+15, 3Sum,"Array, Double Pointer, Sort",15mins,需要巧妙的运用while循环来取重和移动指针 while (left < right && nums[left] == nums[++left]); while (left < right && nums[right] == nums[--right]); 以及while摆放的位置,Time: O(nlogn + n^2) Space: O(nlogn),https://leetcode.com/problems/3sum/description/
+11,Container With Most Water,"Array, Double Pointer",5mins,数学思想：当宽变小了，只能增加高，面积才有可能变大，所以移动height更低的指针,"Time: O(n), Space: O(1)",
+371,Sum of Two Integers,Bit,背答案吧。。,,,https://leetcode.com/problems/sum-of-two-integers/description/
+191,Number of 1 Bits,Bit,1mins,n & (n-1) → 抹掉最高位的1,,
+338,Counting Bits,"Bit, DP",忘记最优解,最高有效位：标记每一轮循环的开始， 以前一轮为基础对新一轮1的个数进行更新,"Time: O(n), Space: O(n)",https://leetcode.com/problems/counting-bits/description/
+268,Missing Number,Math,1mins,求和公式,"Time: O(n), Space: O(1)",
+70,Climbing Stairs,DP,1mins,"dp[0] = 1;
+dp[1] = 1; 
+dp[i] = dp[i - 1] + dp[i - 2];","Time: O(n), Space: O(n)",
+322,Coin Change,DP,20mins,可以从二维dp降低为一维dp，amount为外循环,,https://leetcode.com/problems/coin-change/description/
+300,Longest Increasing Subsequence,DP,15mins,"dp[i]定义: 包括nums[i]的Longest Increasing Subsequence
+
+但是结果不是直接return dp[len - 1]，因为最长有可能并不是在包括最后一位的时候，有可能是在前面，所以最后需要for loop取dp中的最大值",,https://leetcode.com/problems/longest-increasing-subsequence/description/
+1143,"Longest Common Subsequence ",DP,"10mins
+
+经典题目","两个for loop类似于双指针在str上面游走，两种dp更新→两个char相同或者不同
+
+if (char1 == char2) {
+      dp[i][j] = dp[i - 1][j - 1] + 1;
+} else {
+      dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+}",,https://leetcode.com/problems/longest-common-subsequence/description/
+139,Word Break,记忆化搜索,具体有些细节忘记了,记忆化：在搜索过的切片处进行标记，如果再次搜索到，直接return false,,https://leetcode.com/problems/word-break/description/
+377,Combination Sum IV,DP,"二维dp求出来是错的，因为二维dp是真正意义上求combination的个数
+
+    public int combinationSum4(int[] nums, int target) {
+        int n = nums.length;
+        int[][] dp = new int[target + 1][n + 1];
+        for (int i = 0; i <= n; i++) dp[0][i] = 1;
+        for (int i = 1; i <= target; i++) {
+            for (int j = 1; j <= n; j++) {
+                int currNum = nums[j - 1];
+                if (currNum > i) dp[i][j] = dp[i][j - 1];
+                else dp[i][j] = dp[i][j - 1] + dp[i - currNum][j];
+            }
+        }
+        return dp[target][n];
+    }
+
+这道题其实是求permutation的个数
+
+例如[1,2] [2,1]可以算成两个
+
+只能用一维dp
+
+public int combinationSum4(int[] nums, int target) {
+      int[] dp = new int[target + 1];
+      dp[0] = 1;
+      for (int i = 1; i <= target; i++) {
+         for (int j = 0; j < nums.length; j++) {
+             int currNum = nums[j];
+             if (i >= currNum) {
+                dp[i] += dp[i - currNum];
+             } 
+         }
+      }
+   return dp[target];
+}","• 有没有二维dp的做法？
+我一开始以为是0-1背包题，套模板写了个二维dp表，然后发现不对。这nm是求组合，这dp怎么更新？后来卡住了就去看了题解，发现清一色的一位表。思考了一会儿得出了结论：不存在二维解法。
+因为排列与组合的不同在于累加。换句话说，组合的答案其实是所有可能的排列加在一起。也就是说，其实这里的一位dp并不是什么二维dp两行间的存储优化（上下降纬），而是二维dp中一列的求和，是左右的降纬。
+
+• 为什么要把target循环放在外面？
+结合上一个问题，既然二维dp被压缩成从左到右的一纬dp，那么我们更新的顺序也发生了变化。我们首先要对target=0，计算出所有对应nums（即二维表中的行）的结果，并求和，再依次计算target=1， target=2....的求和。即，从左到右更新一维dp表，而不是传统背包题从上到下（宏观上）更新dp表。因此需要修改循环叠加方式。
+
+• 这题真的是一道背包题吗？
+个人认为此类求排序结果的“背包题”严格意义上来说不是背包题的范畴。 相反，它更像一个普通的动态规划题。如果我们把对背包题的知识全部放空，单纯把这题看做一个规模由大缩小，通过分割重复子问题来解决宏问题的考题，反而更容易把转移方程想出来。现在返过去重新审视这题，其实过分执着于背包模板，也是导致我一开始走了二维dp歪路的原因之一。","Time: O(n^2), Space: O(n)",https://leetcode.com/problems/combination-sum-iv/description/
+198,House Robber,DP,15mins,"考虑 edge case 与 base condition的设计
+
+dp[0] = nums[0];
+dp[1] = Math.max(nums[0], nums[1]);
+
+dp[i] = Math.max(nums[i] + dp[i - 2], dp[i - 1]);","Time: O(n), Space: O(n)",https://leetcode.com/problems/house-robber/description/
+213,House Robber II,DP,15mins,"分成两种情况进行讨论 → 利用house robber1，再利用start对坐标进行移位
+
+return Math.max(robHelper(nums, 0), robHelper(nums, 1))","Time: O(n), Space: O(n)",
+91,Decode Ways,DP,"这道题因为有范围1-26，其实就规定了切片的长度，要么是1，要么是2
+
+以i为segment结束的位置，代表有多少decode的方案数量
+
+// base condition
+dp[0] = 1;
+dp[1] = 1;
+
+自底而上","public int numDecodings(String s) {
+   if (s == null || s.length() == 0 || s.charAt(0) == '0') return 0;
+   int n = s.length();
+   int[] dp = new int[n + 1];
+   // base condition
+   dp[0] = 1;
+   dp[1] = 1;
+   // i 代表结束位置
+   for (int i = 2; i <= n; i++) {
+       // 片段长度为2
+       if (s.charAt(i - 2) == '1' || s.charAt(i - 2) == '2' && s.charAt(i - 1) <= '6')
+             dp[i] += dp[i - 2];
+       // 片段长度为1
+       if (s.charAt(i - 1) != '0')
+             dp[i] += dp[i - 1];
+    }
+   return dp[n];
+}","Time: O(n), Space: O(n)",https://leetcode.com/problems/decode-ways/description/
+62,Unique Paths,DP,2mins,"初始化base condition
+
+dp[i][j] = dp[i - 1][j] + dp[i][j - 1];",,https://leetcode.com/problems/unique-paths/description/
+55,Jump Game,Greedy,"8mins
+
+维护一个boundary变量和跳跃最远距离
+
+boundary是前一次跳跃的最远距离
+
+maxLen是这一轮跳跃的最远距离","public boolean canJump(int[] nums) {
+   // edge case
+   if (nums == null || nums.length == 0) return false;
+   if (nums.length == 1) return true;
+   int boundary = 0;
+   int maxLen = 0;
+   for (int i = 0; i <= boundary; i++) {
+         maxLen = Math.max(maxLen, i + nums[i]);
+         if (i == boundary) {
+             boundary = maxLen;
+          }
+         if (boundary >= nums.length - 1) {
+              return true;
+          }
+       }
+  return false;
+}","Time: O(n), Space: O(1)",https://leetcode.com/problems/jump-game/description/
+45,Jump Game II,Greedy,在jump game中添加steps,"public int jump(int[] nums) {
+     // edge case
+    if (nums == null || nums.length < 2) return 0;
+    int boundary = 0, maxLen = 0, steps = 0;
+    for (int i = 0; i <= boundary; i++) {
+         maxLen = Math.max(maxLen, i + nums[i]);
+         if (i == boundary) {
+             boundary = maxLen;
+             steps++;
+          }
+         if (boundary >= nums.length - 1) {
+             return steps;
+          }
+      }
+    return -1;
+}",,
+207,Course Schedule,"BFS, Graph",20mins,"用map分别构造入度表和图
+
+Map<Integer, List<Integer>> graph = new HashMap<>();
+Map<Integer, Integer> indegree = new HashMap<>();
+
+再使用bfs进行topological sort",,https://leetcode.com/problems/course-schedule/
+200,Number of Islands,DFS,5mins,经典dfs的使用,,https://leetcode.com/problems/number-of-islands/description/
+128,Longest Consecutive Sequence,"Array, HashSet",8mins,空间换时间，利用set，使得时间复杂度为o(n),"Time: O(n), Space: O(n)",https://leetcode.com/problems/longest-consecutive-sequence/
+261,Graph Valid Tree,Union-Find,10mins,"牢记uf class模版
+
+if (uf.isConnected(start, end)) return false;
+return uf.getGroups() == 1;",,https://leetcode.com/problems/graph-valid-tree/description/
+417,Pacific Atlantic Water Flow,DFS,15mins,从四条边开始dfs，需要用两个arr来分别记录Pacific与Atlantic能flow到的位置,"Time: O(mn), Space: O(mn)",https://leetcode.com/problems/pacific-atlantic-water-flow/
+323,Number of Connected Components in an Undirected Graph,Union-Find,10mins,"public int find(int x) {
+    if (x != parents[x]) {
+       parents = find(parents[x]);
+    }
+    return parents[x];
+}
+
+public void union(int x, int y) {
+      int rootX = find(x), rootY = find(y);
+      if (rootX == rootY) return;
+      groups--;
+      parents[rootX] = rootY;
+}",,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
