@@ -175,10 +175,110 @@ public void union(int x, int y) {
       if (rootX == rootY) return;
       groups--;
       parents[rootX] = rootY;
-}",,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
+}",,https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/description/
+133,Clone Graph,BFS,Forgot some details,"需要一个map来记录已经copy过的node
+
+一个queue来进行bfs
+
+while (!bfs.isEmpty()) {
+     Node curr = bfs.poll();
+     for (Node neighbor : curr.neighbors) {
+         if (!copy.containsKey(neighbor)) {
+               copy.put(neighbor, new Node(neighbor.val, new ArrayList<>()));
+               bfs.offer(neighbor);
+          }
+          copy.get(curr).neighbors.add(copy.get(neighbor));
+       }
+}","• Time Complexity : O(N+M), where N is a number of nodes (vertices) and M is a number of edges.
+
+• Space Complexity : O(N). This space is occupied by the copy dictionary and in addition to that, space would also be occupied by the queue since we are adopting the BFS approach here. The space occupied by the queue would be equal to O(W) where W is the width of the graph. Overall, the space complexity would be O(N).",https://leetcode.com/problems/clone-graph/description/
+269,Alien Dictionary,"BFS, Graph","30mins → edge case handle!
+
+需要复习，查看代码细节",这道题的本质和course schedule是一致的,,https://leetcode.com/problems/alien-dictionary/description/
+57,Insert Interval,"Double Pointer, Interval",15mins,"使用while循环，newInterval逐步与已经排好序的intervals进行比较，merge
+
+",,https://leetcode.com/problems/insert-interval/description/
+56,Merge Intervals,"Double Pointer, Interval",10mins,"自定义排序 Arrays.sort(intervals, (n1, n2) -> n1[0] - n2[0]);
+
+用linkedlist更加的方便 
+
+维护一个right变量","Time: O(nlogn)
+Space: O(nlogn)",https://leetcode.com/problems/merge-intervals/description/
+435,Non-overlapping Intervals,"Greedy, Interval",10mins,"是56的变体
+
+这道题的核心思想：那么当我们发现需要merge两个interval的时候，应该把右边界跨度最小的保留，最大的remove掉，这是一个贪心思想 →保证最优子结构 →最后remove的数量最少","Time: O(nlogn)
+Space: O(nlogn)",https://leetcode.com/problems/non-overlapping-intervals/description/
+252,Meeting Rooms,"Double Pointer, Interval",5mins,和56一样，维护right,"Time: O(nlogn)
+Space: O(nlogn)",https://leetcode.com/problems/meeting-rooms/description/
+253,Meeting Rooms II,"PriorityQueue, Sort",10mins,放入end，建立最小堆， pq的size就是所需要的room数量,"Time: O(nlogn)
+Space: O(nlogn)",https://leetcode.com/problems/meeting-rooms-ii/description/
+206,Reverse Linked List,"LinkedList, Recursion",5mins,"迭代和递归都要会
+
+public ListNode reverseList(ListNode head) {
+    if (head == null || head.next == null) {
+          return head;
+     }
+     ListNode curr = reverseList(head.next);
+     head.next.next = head;
+     head.next = null;
+     return curr;
+}
+
+
+public ListNode reverseList(ListNode head) {
+   ListNode prev = null, temp = null;
+   while (head != null) {
+        temp = head.next;
+        head.next = prev;
+        prev = head;
+        head = temp;
+    }
+   return prev;
+}","Time: O(n), Space: O(1) → O(n)",https://leetcode.com/problems/reverse-linked-list/description/
+141,Linked List Cycle,"Double Pointer, LinkedList",2mins,使用快慢指针,"Time: O(n), Space: O(1)",https://leetcode.com/problems/linked-list-cycle/
+21,Merge Two Sorted Lists,"Double Pointer, LinkedList",4mins,双指针进行比较,"Time: O(m + n), Space: O(1)",https://leetcode.com/problems/merge-two-sorted-lists/description/
+23,Merge k Sorted Lists,"LinkedList, PriorityQueue",4mins,建立最小堆，把不为null放入pq，使用dummy，curr得到新的list,"• Time complexity: O(Nlogk) where k is the number of linked lists.
+    ◦ The comparison cost will be reduced to O(logk) for every pop and insertion to priority queue. But finding the node with the smallest value just costs O(1) time.
+    ◦ There are N nodes in the final linked list.
+
+• Space complexity :
+    ◦ O(n) Creating a new linked list costs O(n) space.
+    ◦ O(k) The code above present applies in-place method which cost O(1) space. And the priority queue (often implemented with heaps) costs O(k) space (it's far less than N in most situations).",https://leetcode.com/problems/merge-k-sorted-lists/description/
+19,Remove Nth Node From End of List,"Double Pointer, LinkedList",Forgot,"双指针求倒数第n个node的技巧
+
+因为要删除倒数第n个，那么要找到倒数第n+1个，因此我们也需要一个dummynode，防止找不到n+1",One Pass,https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+143,Reorder List,"LinkedList, Stack",Forgot,"存放在stack中的listnode，只要原本的结构没有改变就不会受影响
+
+这个stack的用法比较巧妙，要把重组的逻辑理清楚
+
+public void reorderList(ListNode head) {
+     Deque<ListNode> stack = new ArrayDeque<>();
+     ListNode p = head;
+     while (p != null) {
+         stack.push(p);
+         p = p.next;
+     }
+     ListNode curr = head;
+     // while (true)也是可以的，但是为了防止有edge case，例如head == null
+     while (curr != null) {
+     // 链表尾部的节点
+     ListNode lastNode = stack.pop(); 
+     ListNode next = curr.next; 
+     if (lastNode == next || lastNode.next == next) { 
+     // 结束条件，链表节点数为奇数(lastNode.next == next)或偶数 (lastNode == next) 时均适用
+        lastNode.next = null;
+        break;
+      }
+      curr.next = lastNode; 
+      lastNode.next = next;
+      curr = next; 
+    }
+}","Time: O(n), Space: O(n)",https://leetcode.com/problems/reorder-list/description/
+73,Set Matrix Zeroes,Matrix,5mins,使用辅助数组进行记录,"Time: O(nm), Space: O(n + m)",https://leetcode.com/problems/set-matrix-zeroes/description/
+54,Spiral Matrix,"DFS, Matrix",5mins,dfs的运用，需要visited防止重复访问，也需要一个keepUp变量来保持向上的方向,"Time: O(nm), Space: O(nm)",https://leetcode.com/problems/spiral-matrix/description/
+48,Rotate Image,Matrix,5mins,先按照对角线swap，再按照中线swap,"Time: O(nn), Space: O(1)",https://leetcode.com/problems/rotate-image/description/
+79,Word Search,Backtracking,10mins,本质就是dfs暴力搜索，但是有rollback，和还原状态,,https://leetcode.com/problems/word-search/description/
+3,Longest Substring Without Repeating Characters,"SlidingWindow, String",10mins,"sliding window可以用于求subarray或者是substring
+
+模版：扩大窗口，满足shrink condition 缩小窗口，maintain目标值","Time: O(n), Space: O(k)",https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
 ,,,,,,
