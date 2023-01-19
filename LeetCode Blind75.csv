@@ -519,3 +519,265 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
        if (left != null && right != null) return root;
        return left != null ? left : right;
 }",,
+208,Implement Trie (Prefix Tree),Trie,10mins,"Trie 本质就是在建立一个tree，主要的变换在于如何编写trienode
+
+class TrieNode {
+     public Map<Character, TrieNode> children;
+     public boolean isEnd;
+     public TrieNode() {
+          isEnd = false;
+          children = new HashMap<>();
+     }
+}
+
+class Trie {
+    private TrieNode root;
+    public Trie() {
+         root = new TrieNode();
+    }
+
+    public void insert(String word) {
+         TrieNode curr = root;
+         for (char c : word.toCharArray()) {
+              TrieNode node = curr.children.getOrDefault(c, new TrieNode());
+              curr.children.put(c, node);
+              curr = node;
+          }
+       curr.isEnd = true;
+     }  
+
+    public boolean search(String word) {
+        TrieNode curr = root;
+        for (char c : word.toCharArray()) {
+             if (!curr.children.containsKey(c)) return false;
+             TrieNode node = curr.children.get(c);
+             curr = node;
+         }
+      return curr.isEnd;
+     }
+
+     public boolean startsWith(String prefix) {
+          TrieNode curr = root;
+          for (char c : prefix.toCharArray()) {
+                 if (!curr.children.containsKey(c)) return false;
+                 TrieNode node = curr.children.get(c);
+                 curr = node;
+           }
+       return true;
+    }
+}",,https://leetcode.com/problems/implement-trie-prefix-tree/description/
+211,Design Add and Search Words Data Structure,Trie,"15mins
+
+在自己建立的trie上面进行dfs（preorder traversal）搜索","class WordDictionary {
+    private TrieNode root;
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+    
+    public void addWord(String word) {
+        TrieNode curr = root;
+        for (char c : word.toCharArray()) {
+            TrieNode node = curr.children.getOrDefault(c, new TrieNode());
+            curr.children.put(c, node);
+            curr = node;
+        }
+        curr.isEnd = true;
+    }
+    
+    public boolean search(String word) {
+        TrieNode curr = root;
+        return dfs(curr, word, 0,  '.');
+    }
+
+    public boolean dfs(TrieNode root, String word, int idx, char pattern) {
+        if (idx == word.length()) {
+            return  root.isEnd;
+        }
+        char c = word.charAt(idx);
+        if (c == pattern) {
+            for (TrieNode node : root.children.values()) {
+                if (dfs(node, word, idx + 1, pattern)) return true;
+            }
+        } else {
+            if (!root.children.containsKey(c)) return false;
+            if (dfs(root.children.get(c), word, idx + 1, pattern)) return true;
+        }
+        return false;
+    }
+}
+
+class TrieNode {
+    public Map<Character, TrieNode> children;
+    public boolean isEnd;
+    public TrieNode() {
+        children = new HashMap<>();
+        isEnd = false;
+    }
+}",,https://leetcode.com/problems/design-add-and-search-words-data-structure/description/
+212,Word Search II,"Backtracking, Trie","20mins
+
+使用trie的目的是优化搜索方式
+
+对于任意一个当前位置board[i, j] 而言，只有在Trie 中存在往从字符a 到b 的边时(当前character)，我们才在棋盘上搜索从a 到b 的相邻路径。","class Solution {
+    public List<String> findWords(char[][] board, String[] words) {
+        Trie trie = new Trie();
+        for (String word : words) {
+            trie.insertWord(word);
+        }
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                backtracking(trie.root, board, i, j, res);
+            }
+        }
+        return res;
+    }
+
+    public void backtracking(TrieNode root, char[][] board, int x, int y, List<String> res) {
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || !root.children.containsKey(board[x][y]) || board[x][y] == '#') return;
+        char curr = board[x][y];
+        // 一定先要移动root
+        root = root.children.get(curr);
+        if (root.word != null) {
+            res.add(root.word);
+            // String immutable -> like, initialize a new string
+            root.word = null;
+            // 这里不能return，因为要找到所有的可能性
+        }
+        board[x][y] = '#';
+        backtracking(root, board, x + 1, y, res);
+        backtracking(root, board, x - 1, y, res);
+        backtracking(root, board, x, y + 1, res);
+        backtracking(root, board, x, y - 1, res);
+        board[x][y] = curr;
+    }
+}
+
+class TrieNode {
+    public String word;
+    public Map<Character, TrieNode> children;
+    public TrieNode() {
+        children = new HashMap<>();
+        word = null;
+    }
+}
+
+class Trie {
+
+    public TrieNode root;
+
+    public Trie() {
+        root = new TrieNode();
+    }
+
+    public void insertWord(String word) {
+        TrieNode curr = root;
+        for (char c : word.toCharArray()) {
+            TrieNode node = curr.children.getOrDefault(c, new TrieNode());
+            curr.children.put(c, node);
+            curr = node;
+        }
+        curr.word = word;
+    }
+
+}",,https://leetcode.com/problems/word-search-ii/description/
+347,Top K Frequent Elements,QuickSelect,"30mins
+
+forgot how to write the partition function
+
+","private Map<Integer, Integer> cnt;
+    private Random random;
+    private int idx;
+
+    public int[] topKFrequent(int[] nums, int k) {
+        random = new Random();
+        cnt = new HashMap<>();
+        for (int num : nums) {
+            cnt.put(num, cnt.getOrDefault(num, 0) + 1);
+        }
+        int[] arr = new int[cnt.size()];
+        int p = 0;
+        for (int num : cnt.keySet()) {
+            arr[p++] = num;
+        }
+        idx = cnt.size() - k;
+        quickSelect(arr, 0, arr.length - 1);
+        int[] res = new int[k];
+        p = 0;
+        for (int i = idx; i < arr.length; i++) {
+            res[p++] = arr[i];
+        }
+        return res;
+    }
+
+    public boolean quickSelect(int[] arr, int left, int right) {
+        int partitionIdx = partition(arr, left, right);
+        if (partitionIdx == idx) return true;
+        // right part
+        else if (partitionIdx < idx) {
+            if (quickSelect(arr, partitionIdx + 1, right)) return true;
+        } 
+        // left right
+        else {
+            if (quickSelect(arr, left, partitionIdx - 1)) return true;
+        }
+        return false;
+    }
+    // 1 - 3
+    public int partition(int[] arr, int left, int right) {
+        /* 
+            
+            [0, n)
+            pivot 3 
+            3 2 1 6 8
+                j   i
+
+            以左起点为基础值，逐个与后面的进行比较
+        */
+        int randomIdx = random.nextInt(right - left + 1) + left;
+        swap(arr, left, randomIdx);
+        int j = left, pivotCnt = cnt.get(arr[left]);
+        for (int i = left + 1; i <= right; i++) {
+            if (cnt.get(arr[i]) < pivotCnt) {
+                j++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, left, j);
+        return j;
+    }
+
+    public void swap(int[] arr, int x, int y) {
+        int temp = arr[x];
+        arr[x] = arr[y];
+        arr[y] = temp;
+    }","Time O(n) ",https://leetcode.com/problems/top-k-frequent-elements/
+295,Find Median from Data Stream,PriorityQueue,Forget,"private PriorityQueue<Integer> ascdQueue;
+    private PriorityQueue<Integer> descQueue;
+
+    public MedianFinder() {
+        ascdQueue = new PriorityQueue<>();
+        descQueue = new PriorityQueue<>((n1, n2) -> n2 - n1);
+    }
+    //  desc 2 2 1
+    //  ascd 3 4 5 
+    public void addNum(int num) {
+        // logn
+        if (ascdQueue.size() == descQueue.size()) {
+            // 两个pq都经历过后，相对于整体都被sort过了
+            descQueue.offer(num);
+            ascdQueue.offer(descQueue.poll());
+            // 操作之后 ascd 多一
+        }
+        else {
+            ascdQueue.offer(num);
+            descQueue.offer(ascdQueue.poll());
+            // 操作之后两个队列数量一致
+        }
+    }
+    
+    public double findMedian() {
+        // o(1)
+        if (ascdQueue.size() != descQueue.size()) return ascdQueue.peek();
+        return (ascdQueue.peek() + descQueue.peek()) / 2.0;
+    }",,https://leetcode.com/problems/find-median-from-data-stream/
