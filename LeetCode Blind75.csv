@@ -281,4 +281,241 @@ public void reorderList(ListNode head) {
 3,Longest Substring Without Repeating Characters,"SlidingWindow, String",10mins,"sliding window可以用于求subarray或者是substring
 
 模版：扩大窗口，满足shrink condition 缩小窗口，maintain目标值","Time: O(n), Space: O(k)",https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
-,,,,,,
+424,Longest Repeating Character Replacement,"Greedy, SlidingWindow, String","Forgot
+
+这道题很tricky，在什么时候应该shrink window
+
+并且在shrink的时候，不更新maxCount，最终的答案是不会被影响的(保留了当前最长substring)
+
+也结合了贪心的思想 → maintain一个char的cnt最大值，保留最大值，改变其他的chars，会使得unique substring length最长
+
+ABBABCC K=2
+
+res = 5","public int characterReplacement(String s, int k) {
+    Map<Character, Integer> window = new HashMap<>();
+    int left = 0, right = 0, len = s.length();
+    int maxCount = 0, res = 0;
+    while (right < len) {
+         char curr = s.charAt(right);
+         window.put(curr, window.getOrDefault(curr, 0) + 1);
+         maxCount = Math.max(maxCount, window.get(curr));
+         right++;
+        // 保留cnt最多的，那么当长度right - left - maxcnt > k的时候我们应该shrink窗口
+         while (right - left - maxCount > k) {
+              char remove = s.charAt(left);
+              window.put(remove, window.get(remove) - 1);
+              left++;
+              // 这里不用更新 windowMaxCount
+              // 因为只有 windowMaxCount 变得更大的时候才可能获得更长的重复子串，才会更新 res
+             // 不会影响最终最长substring的结果
+          }
+          res = Math.max(res, right - left);
+      }
+   return res;
+}","Time: O(n), Space: O(k)",https://leetcode.com/problems/longest-repeating-character-replacement/description/
+1004,Max Consecutive Ones III,SlidingWindow,"1004是424的基础
+
+这里求的是连续1的最长长度，那么我们只需要关注1的个数或者说0的个数","从1的个数的角度
+
+public int longestOnes(int[] nums, int k) {
+   int[] cnt = new int[2];
+   int left = 0, right = 0, len = nums.length, res = 0, maxCnt = 0;
+   while (right < len) {
+       int curr = nums[right];
+       cnt[curr]++;
+       right++;
+      // 保留1的cnt
+      while (right - left - cnt[1] > k) {
+          int remove = nums[left];
+          cnt[remove]--;
+          left++;
+       }
+      res = Math.max(res, right - left);
+    }
+  return res;
+}
+
+
+从0的角度
+
+    public int longestOnes(int[] nums, int k) {
+        int left = 0, right = 0, count = 0, max = 0, len = nums.length;
+        while(right < len){
+            //记录zeros的个数
+            if(nums[right] == 0) count++;
+            right++;
+            //shrink
+            while(count > k){
+                if(nums[left] == 0) count--;
+                left++;
+            }
+            max = Math.max(max, right - left);
+        }
+        return max;
+    }","Time: O(n), Space: O(1)",https://leetcode.com/problems/max-consecutive-ones-iii/description/
+76,Minimum Window Substring,SlidingWindow,15mins,"需要一个needed和window hashmap用于滑动窗口，并且需要一个flag（满足条件的个数）用于shrink condition
+
+还有一个tricky的地方，比较两个map的value是否相等，应该使用equals
+
+if (window.get(curr).equals(needed.getOrDefault(curr, 0))) {
+                flag++;
+            }
+
+if (window.get(remove).equals(needed.getOrDefault(remove, 0))) {
+                    flag--;
+                }
+
+原因：
+Integer是对象
+Integer会缓存频繁使用的数值，
+数值范围为-128到127，在此范围内直接返回缓存值。
+超过该范围就会new 一个对象。",Time: O(m + n),
+49,Group Anagrams,HashMap,8mins,anagram一般都要用cnt arr来进行判断和分类,,https://leetcode.com/problems/group-anagrams/description/
+242,Valid Anagram,HashMap,1mins,,,https://leetcode.com/problems/valid-anagram/description/
+20,Valid Parentheses,"HashMap, Stack",4mins,需要细心，把所有的case用清晰的if语句考虑清楚,"Time: O(n), Space: O(n)",https://leetcode.com/problems/valid-parentheses/description/
+125,Valid Palindrome,String,5mins,,,https://leetcode.com/problems/valid-palindrome/description/
+5,Longest Palindromic Substring,"Double Pointer, String",5mins,ExpandAroundCenter → 本质是双指针 → time complexity能被降至 n^2,,https://leetcode.com/problems/longest-palindromic-substring/description/
+647,Palindromic Substrings,"Double Pointer, String",2mins,和5一模一样的，只不说算cnt而已,,https://leetcode.com/problems/palindromic-substrings/description/
+104,Maximum Depth of Binary Tree,"Postorder Traversal, Tree",1mins,经典后序遍历求高度,"Time: O(n), Space: O(n)",https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
+271,Encode and Decode Strings,String,"没有得到最优法
+
+如果直接添加delimiter，那必定应该添加ascii之外的char
+
+但是无法做到通用性versatile","sb.append(s.length()).append('/').append(s);
+
+It doesn't depend on the set of input characters, and hence is more versatile and effective.
+
+public class Codec {
+
+    // Encodes a list of strings to a single string.
+    public String encode(List<String> strs) {
+        StringBuilder sb = new StringBuilder();
+        for (String word : strs) {
+            int len = word.length();
+            sb.append(len).append(""/"").append(word);
+        }
+        return sb.toString();
+    }
+
+    // Decodes a single string to a list of strings.
+    public List<String> decode(String s) {
+        List<String> res = new ArrayList<>();
+        int preEndIdx = 0;
+        while (preEndIdx < s.length()) {
+            int slashIdx = s.indexOf('/', preEndIdx);
+            int len = Integer.parseInt(s.substring(preEndIdx, slashIdx));
+            preEndIdx = slashIdx + len + 1;
+            res.add(s.substring(slashIdx + 1, preEndIdx));
+        }
+        return res;
+    }
+}",,https://leetcode.com/problems/encode-and-decode-strings/description/
+100,Same Tree,"Preorder Traversal, Tree",1mins,preorder traversal → 注意一个case就好,"Time: O(n), Space: O(n)",https://leetcode.com/problems/same-tree/description/
+226,Invert Binary Tree,"Postorder Traversal, Tree",2mins,postorder traversal → bottom to up,"Time: O(n), Space: O(n)",https://leetcode.com/problems/invert-binary-tree/description/
+124,Binary Tree Maximum Path Sum,"Postorder Traversal, Tree",3mins,"有一个概念：贡献值 + 由maxdepth函数改编而来
+
+如果贡献值小于0，那么我们不返回那个值，返回0，反之返回
+
+    private int maxSum;
+    public int maxPathSum(TreeNode root) {
+        maxSum = Integer.MIN_VALUE;
+        postorderTraversal(root);
+        return maxSum;
+    }
+
+    public int postorderTraversal(TreeNode root) {
+        if (root == null) return 0;
+        int left = postorderTraversal(root.left);
+        int right = postorderTraversal(root.right);
+        maxSum = Math.max(maxSum, left + right + root.val);
+        int temp = left > right ? left : right;
+        return temp + root.val > 0 ? temp + root.val : 0;
+    }","Time: O(n), Space: O(n)",https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
+102,Binary Tree Level Order Traversal,"BFS Level Traversal, Tree",4mins,"注意edge case
+
+List<List<Integer>> res = new ArrayList<>();
+if (root == null) return res;","Time: O(n), Space: O(n)",https://leetcode.com/problems/binary-tree-level-order-traversal/description/
+572,Subtree of Another Tree,"Preorder Traversal, Tree",4mins,"结合100
+
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if (root == null) return false;
+        if (isSameTree(root, subRoot)) return true;
+        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+    }
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true;
+        if (p == null || q == null) return false;
+        if (p.val != q.val) return false;
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }",,https://leetcode.com/problems/subtree-of-another-tree/description/
+105,Construct Binary Tree from Preorder and Inorder Traversal,"HashMap, Postorder Traversal, Tree","虽然记得需要使用map用于寻找inorder中的idx，但是忘记了left，right的起始位置, 我们还需要得到分支的长度
+
+树的构造都常用到后序遍历
+
+划分左右区域","private Map<Integer, Integer> idxAtInorder;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        idxAtInorder = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            idxAtInorder.put(inorder[i], i);
+        }
+        return helper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+    }
+
+    public TreeNode helper(int[] preorder, int preLeft, int preRight, int[] inorder, int inLeft, int inRight) {
+        if (inLeft > inRight) return null;
+        int rootVal = preorder[preLeft];
+        int idx = idxAtInorder.get(rootVal);
+        int leftSize = idx - inLeft;
+        TreeNode leftNode = helper(preorder, preLeft + 1, preLeft + leftSize, inorder, inLeft, idx - 1);
+        TreeNode rightNode = helper(preorder, preLeft + leftSize + 1, preRight, inorder, idx + 1, inRight);
+        TreeNode node = new TreeNode(rootVal);
+        node.left = leftNode;
+        node.right = rightNode;
+        return node;
+    }","Time: O(n), Space: O(n)",https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+98,Validate Binary Search Tree,"Preorder Traversal, Tree",4mins,carry一个最大值和最小值 小精度可以auto转化为大精度，反之则不行,,https://leetcode.com/problems/validate-binary-search-tree/description/
+230,Kth Smallest Element in a BST,"Inorder Traversal, Tree",5mins,"bst就两个性质可以利用，inorder或者是左小右大
+
+    private int idx, res;
+    public int kthSmallest(TreeNode root, int k) {
+        idx = 0;
+        res = 0;
+        helper(root, k);
+        return res;
+    }
+
+    public boolean helper(TreeNode root, int k) {
+        if (root == null) return false;
+        if (helper(root.left, k)) return true;
+        idx++;
+        if (idx == k) {
+            res = root.val;
+            return true;
+        }
+        if (helper(root.right, k)) return true;
+        return false;
+    }",,https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+235,Lowest Common Ancestor of a Binary Search Tree,Tree,4mins,"利用bst的性质，用range来判断
+
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+  if (root == null) return null;
+  if (p.val > q.val) {
+      return lowestCommonAncestor(root, q, p);
+   }
+   if (root.val >= p.val && root.val <= q.val) return root;
+   if (root.val < p.val) {
+        return lowestCommonAncestor(root.right, p, q);
+    }
+   return lowestCommonAncestor(root.left, p, q);
+}",,https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+236,Lowest Common Ancestor of a Binary Tree,Tree,5mins,"这个方法是more versatile的，要和235区别开来
+
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+      if (root == null) return null;
+      if (root.val == p.val || root.val == q.val) return root;
+      TreeNode left = lowestCommonAncestor(root.left, p, q);
+      TreeNode right = lowestCommonAncestor(root.right, p, q);
+       if (left != null && right != null) return root;
+       return left != null ? left : right;
+}",,
