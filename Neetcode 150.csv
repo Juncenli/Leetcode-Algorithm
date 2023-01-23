@@ -100,7 +100,265 @@ while (left < right && nums[left] == nums[++left]);
         }
         return sum;
     }",,
-,,,,,,
-,,,,,,
+121,Best Time to Buy and Sell Stock,Array,1mins,,Time O(n) Space O(1),https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
+3,Longest Substring Without Repeating Characters,"HashMap, Sliding Window",3mins,"shrink condition
+
+while (cntMap.get(curr) > 1)",Time O(n) Space O(n),https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+424,Longest Repeating Character Replacement,"Greedy, HashMap, Sliding Window","5mins
+
+保留窗口了cnt最多的character → 使得最长","1、什么时候应该扩大窗口？
+2、什么时候应该缩小窗口？
+3、什么时候得到一个合法的答案？
+针对本题，以上三个问题的答案是：
+1、当可替换次数大于 0 时，扩大窗口，所有进入窗口的字符都进行替换，使得窗口内的所有元素都是重复的。
+2、当可替换次数小于 0 时，缩小窗口，空余出更多可替换次数，以便之后继续扩大窗口。
+3、只要可替换次数大于等于 0，窗口中的字符串都是重复的，我们想求的是一个最大窗口长度。
+
+
+不用更新 windowMaxCount
+因为只有 windowMaxCount 变得更大的时候才可能获得更长的重复子串，才会更新 res",Time O(n) Space O(n),https://leetcode.com/problems/longest-repeating-character-replacement/description/
+567,Permutation in String,"HashMap, Sliding Window",10mins,"需要两个hashmap来分别记录
+
+return trueif one of s1's permutations is the substring of s2  → 本质是anagram
+
+当窗口的长度等于s1的时候，进行收缩
+
+    public boolean checkInclusion(String s1, String s2) {
+        // 本质是anagram
+        if (s2.length() < s1.length()) return false;
+        Map<Character, Integer> neededMap = new HashMap<>();
+        for (char c : s1.toCharArray()) {
+            neededMap.put(c, neededMap.getOrDefault(c, 0) + 1);
+        }
+        int valid = 0;
+        Map<Character, Integer> windowMap = new HashMap<>();
+        int left = 0, right = 0, len = s2.length();
+        while (right < len) {
+            char curr = s2.charAt(right);
+            windowMap.put(curr, windowMap.getOrDefault(curr, 0) + 1);
+            if (windowMap.get(curr).equals(neededMap.get(curr))) {
+                valid++;
+            }
+            right++;
+            if (right - left == s1.length()) {
+                if (valid == neededMap.size()) return true;
+                char remove = s2.charAt(left);
+                if (windowMap.get(remove).equals(neededMap.get(remove))) {
+                    valid--;
+                }
+                windowMap.put(remove, windowMap.get(remove) - 1);
+                left++;
+            }
+        }
+        return false;
+    }",Time O(n) Space O(n),https://leetcode.com/problems/permutation-in-string/
+76,Minimum Window Substring,"HashMap, Sliding Window",8mins,经典模版题,Time O(m+n),https://leetcode.com/problems/minimum-window-substring/description/
+239,Sliding Window Maximum,"MaxQueue, Sliding Window",8mins,"利用deque来实现mxaQueue, 这样就能保持窗口中的最大值
+
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        Deque<Integer> maxQueue = new ArrayDeque<>();
+        int left = 0, right = 0, len = nums.length;
+        int[] maxArr = new int[len - k + 1];
+        int p = 0;
+        while (right < len) {
+            int curr = nums[right];
+            // maxQueue: max -> min
+            while (!maxQueue.isEmpty() && curr > maxQueue.peekLast()) {
+                maxQueue.pollLast();
+            }
+            maxQueue.offerLast(curr);
+            right++;
+            if (right - left > k) {
+                int remove = nums[left];
+                if (remove == maxQueue.peekFirst()) {
+                    maxQueue.pollFirst();
+                }
+                left++;
+            }
+            if (right - left == k) {
+                maxArr[p++] = maxQueue.peekFirst();
+            }
+        }
+        return maxArr;
+    }",Time O(n) Space O(n),https://leetcode.com/problems/sliding-window-maximum/description/
+20,Valid Parentheses,"HashMap, Stack",3mins,right parentheses是key， left是value,Time O(n) Space O(n),https://leetcode.com/problems/valid-parentheses/description/
+155,Min Stack,Stack,5mins,"Deque<Integer> origin;
+Deque<Integer> minStk;
+
+minStk的作用是保持最小状态",,https://leetcode.com/problems/min-stack/description/
+150,Evaluate Reverse Polish Notation,Stack,"8mins
+
+如果要使用deque来模拟stack，那么一定要使用offerLast and pollLast, 这样才不会出错","    public int evalRPN(String[] tokens) {
+        Deque<Integer> stk = new ArrayDeque<>();
+        for (String token : tokens) {
+            if (token.equals(""*"") || token.equals(""/"") || token.equals(""+"") || token.equals(""-"")) {
+                int num1 = stk.pollLast();
+                int num2 = stk.pollLast();
+                switch (token) {
+                    case ""+"":
+                        stk.offerLast(num2 + num1);
+                        break;
+                    case ""-"" :
+                        stk.offerLast(num2 - num1);
+                        break;
+                    case ""*"" :
+                        stk.offerLast(num2 * num1);
+                        break;
+                    default :
+                        stk.offerLast(num2 / num1);
+                        break;
+                }
+            } else {
+                stk.offerLast(Integer.parseInt(token));
+            }
+        }
+        return stk.pollLast();
+    }",,https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
+22,Generate Parentheses,Backtracking,"10mins
+
+
+注意添加parentheses的顺序和条件","    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        backtracking(res, new StringBuilder(), 0, 0, n);
+        return res;
+    }
+
+    public void backtracking(List<String> res, StringBuilder sb, int leftCnt, int rightCnt, int n) {
+        if (leftCnt == n && rightCnt == n) {
+            res.add(sb.toString());
+            return;
+        }
+
+        if (leftCnt < n) {
+            sb.append(""("");
+            backtracking(res, sb, leftCnt + 1, rightCnt, n);
+            sb.setLength(sb.length() - 1);
+        }
+
+        if (rightCnt < leftCnt) {
+            sb.append("")"");
+            backtracking(res, sb, leftCnt, rightCnt + 1, n);
+            sb.setLength(sb.length() - 1);
+        }
+    }",,https://leetcode.com/problems/generate-parentheses/description/
+140,Word Break II,Backtracking,直接backtracking暴力搜索,"public List<String> wordBreak(String s, List<String> wordDict) {
+        StringBuilder sb = new StringBuilder();
+        List<String> res = new ArrayList<>();
+        Set<String> dict = new HashSet<>();
+        for (String word : wordDict) {
+            dict.add(word);
+        }
+        backtracking(res, sb, dict, s, 0);
+        return res;
+    }
+
+    public void backtracking(List<String> res, StringBuilder sb, Set<String> dict, String s, int idx) {
+        if (idx == s.length()) {
+            String temp = sb.toString();
+            res.add(temp.substring(0, temp.length() -1));
+            return;
+        }
+        for (int i = idx; i < s.length(); i++) {
+            String token = s.substring(idx, i + 1);
+            if (!dict.contains(token)) continue;
+            int len = sb.length();
+            sb.append(token);
+            sb.append("" "");
+            backtracking(res, sb, dict, s, i + 1);
+            sb.setLength(len);
+        }
+    }",,https://leetcode.com/problems/word-break-ii/
+739,Daily Temperatures,Stack,"5mins
+
+monotonic （/ˌmɑnəˈtɑnɪk/） stack的运用， 放入的是idx",模版框架 for → while （pop）,Time O(n) Space O(n),https://leetcode.com/problems/daily-temperatures/
+853,Car Fleet,Stack,"单调最大栈
+
+在后面的车子: 到达终点所用的时间小于前面的车子，则一定能形成车队","    public int carFleet(int target, int[] position, int[] speed) {
+        int len = position.length;
+        int[][] cars = new int[len][2];
+        for (int i = 0; i < len; i++) {
+            cars[i][0] = position[i];
+            cars[i][1] = speed[i];
+        }
+        Arrays.sort(cars, (n1, n2) -> (n1[0] - n2[0]));
+        Stack<Double> stk = new Stack<>();
+        // maxStack max -> min
+        for (int i = 0; i < len; i++) {
+            double time = (target - cars[i][0]) / (double)cars[i][1];
+            while (!stk.isEmpty() && stk.peek() <= time) {
+                stk.pop();
+            }
+            stk.push(time);
+        }
+        return stk.size();
+    }",,https://leetcode.com/problems/car-fleet/description/
+84,Largest Rectangle in Histogram,Stack,"单调最大栈，放入的是idx
+
+min height → max height
+
+当遇到一个更小的height时，会pop出左边界，preIdx = peek() 这时宽度 i -preIdx - 1, 高度是arr[左边界]
+
+去掉重复计算","public int largestRectangleArea(int[] heights) {
+    int len = heights.length;
+    int[] arr = new int[len + 2];
+    for (int i = 1; i <= len; i++) {
+        arr[i] = heights[i - 1];
+    }
+    int maxArea = 0;
+    Stack<Integer> monoMinStk = new Stack<>();
+    for (int i = 0; i < arr.length; i++) {
+         int currHeight = arr[i];
+         while (!monoMinStk.isEmpty() && arr[monoMinStk.peek()] > currHeight) {
+              int leftBoundaryIdx = monoMinStk.pop();
+              int preIdx = monoMinStk.peek();
+              int width = i - preIdx - 1;
+              maxArea = Math.max(maxArea, width * arr[leftBoundaryIdx]);
+          }
+      monoMinStk.push(i);
+     }
+   return maxArea;
+}",Time O(n) Space O(n),https://leetcode.com/problems/largest-rectangle-in-histogram/description/
+704,Binary Search,BinarySearch,二分模版,,Time O(logn) Space O(1),https://leetcode.com/problems/binary-search/description/
+74,Search a 2D Matrix,BinarySearch,5mins,"把二维二分搜索压缩成一维度的
+
+int left = 0, right = m * n - 1;
+
+int mid = left + (right - left) / 2;
+int x = mid / n;
+int y = mid % n;",O(log(m * n)),https://leetcode.com/problems/search-a-2d-matrix/description/
+875,Koko Eating Bananas,BinarySearch,"难点在于如何构造单调递减函数
+
+f(x)是关于速度x的单调递减函数(速度越快所用时间越短)，然后求左边界[1, maxSpeed]","public int minEatingSpeed(int[] piles, int h) {
+        // the eating speed of koko is x, the y is the time of eating all of bananas. 
+        // Monotonically decreasing function f(x) = ax + b;
+        // binary search -> find the speed 
+
+        int left = 1, right = 1000000001;
+        // 求左边界，且左边界一定存在
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            // 目标是速度越小时间尽量长，但满足要求
+            if (f(piles, mid) <= h) {
+                // 速度减小
+                right = mid;
+            } else {
+                // 总时间大于h，速度要加快
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+
+    public int f(int[] piles, int x) {
+        int hours = 0;
+        for (int i = 0; i < piles.length; i++) {
+            // 都用整个小时吃完当前这棵树
+            hours += piles[i] / x;
+            if (piles[i] % x > 0) {
+                hours++;
+            }
+        }
+        return hours;
+    }",O(n⋅logm),https://leetcode.com/problems/koko-eating-bananas/
 ,,,,,,
 ,,,,,,
