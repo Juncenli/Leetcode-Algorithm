@@ -77,7 +77,7 @@ while (left < right && nums[left] == nums[++left]);
 11,Container With Most Water,Two Pointer,2mins,"当宽变小，只有高点大，才能使得面积变大的可能
 
 所以pointer移动规则，height低的移动",Time O(n) Space O(1),https://leetcode.com/problems/container-with-most-water/description/
-,,,"Forgot the details
+42,Trapping Rain Water,Two Pointer,"Forgot the details
 
 首尾双指针保持左右边界高度","    public int trap(int[] height) {
         int len = height.length;
@@ -99,7 +99,7 @@ while (left < right && nums[left] == nums[++left]);
             }
         }
         return sum;
-    }",,
+    }",Time O(n) Space O(1),https://leetcode.com/problems/trapping-rain-water/
 121,Best Time to Buy and Sell Stock,Array,1mins,,Time O(n) Space O(1),https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
 3,Longest Substring Without Repeating Characters,"HashMap, Sliding Window",3mins,"shrink condition
 
@@ -334,13 +334,13 @@ f(x)是关于速度x的单调递减函数(速度越快所用时间越短)，然�
         // binary search -> find the speed 
 
         int left = 1, right = 1000000001;
-        // 求左边界，且左边界一定存在
-        while (left < right) {
+        // 求左边界
+        while (left ≤ right) {
             int mid = left + (right - left) / 2;
             // 目标是速度越小时间尽量长，但满足要求
             if (f(piles, mid) <= h) {
                 // 速度减小
-                right = mid;
+                right = mid - 1;
             } else {
                 // 总时间大于h，速度要加快
                 left = mid + 1;
@@ -349,8 +349,8 @@ f(x)是关于速度x的单调递减函数(速度越快所用时间越短)，然�
         return left;
     }
 
-    public int f(int[] piles, int x) {
-        int hours = 0;
+    public long f(int[] piles, int x) {
+        long hours = 0;
         for (int i = 0; i < piles.length; i++) {
             // 都用整个小时吃完当前这棵树
             hours += piles[i] / x;
@@ -360,5 +360,150 @@ f(x)是关于速度x的单调递减函数(速度越快所用时间越短)，然�
         }
         return hours;
     }",O(n⋅logm),https://leetcode.com/problems/koko-eating-bananas/
-,,,,,,
-,,,,,,
+153,Find Minimum in Rotated Sorted Array,BinarySearch,二分法模版：和nums[right]做比较,"public int findMin(int[] nums) {
+     int len = nums.length;
+     int left = 0, right = len - 1;
+     while (left < right) {
+         int mid = left + (right - left) / 2;
+         if (nums[mid] > nums[right]) {
+              left = mid + 1;
+         }  else {
+              right = mid;
+         }
+       }
+   return nums[left];
+}",logn,https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/
+33,Search in Rotated Sorted Array,BinarySearch,先找到pivot，然后在左右区间分别搜索target（因为pivot的值是最小值）,,,https://leetcode.com/problems/search-in-rotated-sorted-array/description/
+981,Time Based Key-Value Store,BinarySearch,,,,https://leetcode.com/problems/time-based-key-value-store/description/
+4,Median of Two Sorted Arrays,BinarySearch,"注意edge cases的处理
+
+明白题意","class TimeMap {
+    private Map<String, List<Element>> timeMap;
+    public TimeMap() {
+        timeMap = new HashMap<>();
+    }
+    
+    public void set(String key, String value, int timestamp) {
+        List<Element> list = timeMap.getOrDefault(key, new ArrayList<>());
+        list.add(new Element(value, timestamp));
+        timeMap.put(key, list);
+    }
+    
+    public String get(String key, int timestamp) {
+        List<Element> list = timeMap.get(key);
+        if (list == null) return """";
+        int left = 0, right = list.size() - 1;
+        // 查找时间，移动index
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (list.get(mid).timestamp > timestamp) {
+                right = mid - 1;
+            }
+            else if (list.get(mid).timestamp < timestamp) {
+                left = mid + 1;
+            }
+            else return list.get(mid).value;
+        }
+        // left是key对应的timestamp应该在的位置，我们应该找prev，所以减1 （因为没有exactly timestamp一样的value）
+        if (left - 1 < 0) return """"; // 越界不合法
+        return list.get(left - 1).value;
+    }
+}
+
+class Element {
+    String value;
+    int timestamp;
+    public Element(String value, int timestamp) {
+        this.value = value;
+        this.timestamp = timestamp;
+    }
+}",,https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+4,Median of Two Sorted Arrays,BinarySearch,,,,https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+206,Reverse Linked List,"LinkedList, Recursion",1mins,,,
+21,Merge Two Sorted Lists,"LinkedList, Two Pointer",1mins,,,https://leetcode.com/problems/merge-two-sorted-lists/description/
+143,Reorder List,"LinkedList, Stack",5mins,"需要一个stack来得到lastnode, 还有三个指针在不停的变换，curr, next, last
+
+while break的条件(next == last || next == last.next) 奇偶数",,https://leetcode.com/problems/reorder-list/description/
+19,Remove Nth Node From End of List,"DummyNode, LinkedList, Two Pointer",pay attention on details,"需要使用双指针，实现one pass
+
+我们找的是前一个node，所以还要考虑原本链表没有前一个node的情况，所以需要dummy先给原链表接上
+
+return dummy.next",,https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+138,Copy List with Random Pointer,"Deep Copy, LinkedList",8mins,"deep copy的题都要用bfs和map
+
+类似于copy graph，动作同步
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if (head == null) return null;
+        Map<Node, Node> copyMap = new HashMap<>();
+        Queue<Node> bfsQueue = new LinkedList<>();
+        bfsQueue.offer(head);
+        copyMap.put(head, new Node(head.val));
+        while (!bfsQueue.isEmpty()) {
+            Node curr = bfsQueue.poll();
+            Node copyCurr = copyMap.get(curr);
+            if (curr.random != null && !copyMap.containsKey(curr.random)) {
+                bfsQueue.offer(curr.random);
+                Node copyNode = new Node(curr.random.val);
+                copyMap.put(curr.random, copyNode);
+            }
+            if (curr.next != null && !copyMap.containsKey(curr.next)) {
+                bfsQueue.offer(curr.next);
+                Node copyNode = new Node(curr.next.val);
+                copyMap.put(curr.next, copyNode);
+            }
+            Node copyNext = copyMap.get(curr.next);
+            Node copyRandom = copyMap.get(curr.random);
+            copyCurr.next = copyNext;
+            copyCurr.random = copyRandom;
+        }
+        return copyMap.get(head);
+    }
+}",,https://leetcode.com/problems/copy-list-with-random-pointer/description/
+2,Add Two Numbers,"DummyNode, LinkedList, Two Pointer",5mins,while (l1 != null || l2 != null || carry != 0),,https://leetcode.com/problems/add-two-numbers/description/
+141,Linked List Cycle,"LinkedList, Two Pointer",1mins,,,https://leetcode.com/problems/linked-list-cycle/description/
+287,Find the Duplicate Number,"Floyd's Algorithm, LinkedList, Two Pointer",5mins,"public int findDuplicate(int[] nums) {
+      int slowIdx = 0, fastIdx = 0; 
+      while (true) {
+            slowIdx = nums[slowIdx];
+            fastIdx = nums[nums[fastIdx]];
+            if (slowIdx == fastIdx) {
+            int flag = 0;
+            while (flag != slowIdx) {
+                 flag = nums[flag];
+                slowIdx = nums[slowIdx];
+            }
+         return flag;
+       }
+    }
+}",Time O(n) Space O(1),https://leetcode.com/problems/find-the-duplicate-number/description/
+146,LRU Cache,"DoubleLinkedList, HashMap",20mins,"需要自己建造DoubleLinkedList 对应有method →  moveToHead, removeNode, addToHead
+
+注意细节","• Time complexity : O(1) both for put and get.
+
+• Space complexity : O(capacity) since the space is used only for a hashmap and double linked list with at most capacity + 1 elements.",https://leetcode.com/problems/lru-cache/description/
+23,Merge k Sorted Lists,"LinkedList, PriorityQueue",5mins,,,
+25,Reverse Nodes in k-Group,"LinkedList, Recursion",forgot → 巧妙的使用递归,"    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null) return null;
+        ListNode a = head, b = head;
+        for (int i = 0; i < k; i++) {
+            if (b == null) return a;
+            b = b.next;
+        }
+        ListNode newHead = reverse(a, b);
+        a.next = reverseKGroup(b, k);
+        return newHead;
+    }
+
+    public ListNode reverse(ListNode a, ListNode b) {
+        ListNode pre = null, temp = null;
+        ListNode curr = a;
+        while (curr != b) {
+            temp = curr.next;
+            curr.next = pre;
+            pre = curr;
+            curr = temp;
+        }
+        return pre;
+    }",,https://leetcode.com/problems/reverse-nodes-in-k-group/description/
