@@ -507,3 +507,165 @@ class Solution {
         }
         return pre;
     }",,https://leetcode.com/problems/reverse-nodes-in-k-group/description/
+226,Invert Binary Tree,Tree,1mins,Post Order Traversal → 构造,,https://leetcode.com/problems/invert-binary-tree/description/
+104,Maximum Depth of Binary Tree,Tree,1mins,Post Order Traversal → 算高度,,https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
+543,Diameter of Binary Tree,Tree,2mins,结合maxdepth method,,https://leetcode.com/problems/diameter-of-binary-tree/description/
+110,Balanced Binary Tree,Tree,2mins,结合maxdepth method,,https://leetcode.com/problems/balanced-binary-tree/description/
+100,Same Tree,Tree,2mins,Preorder traversal,,https://leetcode.com/problems/same-tree/description/
+572,Subtree of Another Tree,Tree,"4mins
+
+结合same tree","class Solution {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if (root == null && subRoot == null) return true;
+        if (root == null || subRoot == null) return false;
+        if (isSameTree(root, subRoot)) return true;
+        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+    }
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true;
+        if (p == null || q == null) return false;
+        if (p.val != q.val) return false;
+        boolean left = isSameTree(p.left, q.left);
+        boolean right = isSameTree(p.right, q.right);
+        return left && right;
+    }
+}",,https://leetcode.com/problems/subtree-of-another-tree/description/
+235,Lowest Common Ancestor of a Binary Search Tree,BST,take advantage of the property of BST → range,,,https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+199,Binary Tree Right Side View,"BFS, Level Traversal, Tree",3mins,"if (i == size - 1) {
+    res.add(curr.val);
+}",,https://leetcode.com/problems/binary-tree-right-side-view/description/
+1448,Count Good Nodes in Binary Tree,Tree,"8mins
+
+需要keep一个最大值，当目前值是大于或等于最大值时，说明这条path是合法的
+
+使用前序遍历","    private int cnt;
+    public int goodNodes(TreeNode root) {
+        cnt = 0;
+        helper(root, root.val);
+        return cnt;
+    }
+
+    public void helper(TreeNode root, int max) {
+        if (root == null) return;
+        if (root.val >= max) {
+            cnt++;
+            max = root.val;
+        }
+        helper(root.left, max);
+        helper(root.right, max);
+    }",,https://leetcode.com/problems/count-good-nodes-in-binary-tree/description/
+98,Validate Binary Search Tree,BST,3mins,"carry a range, comparing the root’s value with range",,https://leetcode.com/problems/validate-binary-search-tree/description/
+230,Kth Smallest Element in a BST,BST,4mins,全局变量加上中序遍历,,https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+105,Construct Binary Tree from Preorder and Inorder Traversal,Tree,5mins,后序遍历进行构造，需要利用hashmap查找坐标，这样才能算出左子树的长度，才能进行双指针的移动,,https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
+124,Binary Tree Maximum Path Sum,Tree,5mins,"后序遍历，构建贡献值的概念 > 0
+
+    private int maxSum;
+    public int maxPathSum(TreeNode root) {
+        maxSum = Integer.MIN_VALUE;
+        helper(root);
+        return maxSum;
+    }
+
+    public int helper(TreeNode root) {
+        if (root == null) return 0;
+        int left = helper(root.left);
+        int right = helper(root.right);
+        maxSum = Math.max(maxSum, left + right + root.val);
+        if (left + root.val < 0 && right + root.val < 0) return 0;
+        return left > right ? left + root.val : right + root.val;
+    }",,https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
+297,Serialize and Deserialize Binary Tree,Tree,"12mins
+
+需要一个delimiter用于分割，也需要当遇到null的时候，插入一个null的字符，这样，当我们重构tree的时候，遇见null string，说明我们应该返回null了
+
+同时需要一个全局变量指针
+
+前序构建string
+
+后序构造tree
+
+为什么能构造unique的，也是因为我们插入了分隔符号还有null string","    private int p = 0;
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        preorderTraversal(root, sb);
+        return sb.toString();
+    }
+
+    public void preorderTraversal(TreeNode root, StringBuilder sb) {
+        if (root == null) {
+            sb.append(""null"");
+            sb.append("","");
+            return;
+        }
+        sb.append(root.val);
+        sb.append("","");
+        preorderTraversal(root.left, sb);
+        preorderTraversal(root.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] tokens = data.split("","");
+        return postorderTraversal(tokens);
+    }
+
+    public TreeNode postorderTraversal(String[] tokens) {
+        if (tokens[p].equals(""null"")) {
+            p++;
+            return null;
+        }
+        int rootVal = Integer.parseInt(tokens[p]);
+        p++;
+        TreeNode left = postorderTraversal(tokens);
+        TreeNode right = postorderTraversal(tokens);
+        TreeNode node = new TreeNode(rootVal);
+        node.left = left;
+        node.right = right;
+        return node;
+    }",,https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
+449,Serialize and Deserialize BST,BST,用297的算法能过，但是没有利用 bst的性质 ：左大右小,"    private int p = 0;
+    
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        toStringPreorderTraversal(root, sb);
+        return sb.toString();
+    }
+    
+    public void toStringPreorderTraversal(TreeNode root, StringBuilder sb) {
+        if (root == null) {
+            return;
+        }
+        sb.append(root.val);
+        sb.append("","");
+        toStringPreorderTraversal(root.left, sb);
+        toStringPreorderTraversal(root.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    // 2, 1, 3
+    public TreeNode deserialize(String data) {
+        // edge case 
+        if (data.equals("""")) return null;
+        String[] tokens = data.split("","");
+        return toTreeNodePreorderTraversal(tokens, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    
+    public TreeNode toTreeNodePreorderTraversal(String[] tokens, int min, int max) {
+        // 需要这个结束，是因为 我们并没有把null计算进去
+        if (p >= tokens.length) {
+            return null;
+        }
+        // 判断当前值是否存在与当前区域
+        int currVal = Integer.parseInt(tokens[p]);
+        if (currVal < min || currVal > max) {
+            return null;
+        }
+        TreeNode root = new TreeNode(currVal);
+        p++;
+        root.left = toTreeNodePreorderTraversal(tokens, min, currVal);
+        root.right = toTreeNodePreorderTraversal(tokens, currVal, max);
+        return root;
+    }",,https://leetcode.com/problems/serialize-and-deserialize-bst/description/
