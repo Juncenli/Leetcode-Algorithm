@@ -669,3 +669,304 @@ class Solution {
         root.right = toTreeNodePreorderTraversal(tokens, currVal, max);
         return root;
     }",,https://leetcode.com/problems/serialize-and-deserialize-bst/description/
+208,Implement Trie (Prefix Tree),Trie,5mins,"class TrieNode {
+       public Map<Character, TrieNode> children;
+       public boolean isEnd;
+       public TrieNode() {
+           children = new HashMap<>();
+           isEnd = false;
+    }
+}
+
+模版题",,https://leetcode.com/problems/implement-trie-prefix-tree/description/
+211,Design Add and Search Words Data Structure,Trie,12mins,"因为带pattern，那么我们就需要把每一种可能进行搜索，dfs
+
+for循环",,https://leetcode.com/problems/design-add-and-search-words-data-structure/description/
+212,Word Search II,Trie,12mins,把所要求的word放入trie，然后再进行搜索,,https://leetcode.com/problems/word-search-ii/description/
+703,Kth Largest Element in a Stream,PriorityQueue,5mins,kth largest element in the sorted order → 用最小堆，保持队列的个数，队列头就是第k大的数字,,https://leetcode.com/problems/kth-largest-element-in-a-stream/
+1046,Last Stone Weight,PriorityQueue,2mins,,,https://leetcode.com/problems/last-stone-weight/description/
+973,K Closest Points to Origin,QuickSelect,15mins,"对距离进行比较
+
+    private int resIdx;
+    private Random random;
+    public int[][] kClosest(int[][] points, int k) {
+        random = new Random();
+        resIdx = k - 1;
+        quickSelect(0, points.length - 1, points);
+        int[][] res = new int[k][2];
+        for (int i = 0; i < k; i++) {
+            res[i] = points[i];
+        }
+        return res;
+    }
+
+    public void quickSelect(int left, int right, int[][] points) {
+        int idx = partition(points, left, right);
+        if (idx == resIdx) return;
+        if (idx > resIdx) {
+            quickSelect(0, idx - 1, points) ;
+        } else {
+            quickSelect(idx + 1, right, points);
+        }
+    }
+
+    public int partition(int[][] points, int left, int right) {
+        int randomIdx = random.nextInt(right - left + 1) + left;
+        swap(points, randomIdx, left);
+        double pivot = getDistance(points[left]);
+        int j = left;
+        for (int i = left + 1; i <= right; i++) {
+            if (getDistance(points[i]) < pivot) {
+                j++;
+                swap(points, j, i);
+            }
+        }
+        swap(points, left, j);
+        return j;
+    }
+
+    public void swap(int[][] points, int x, int y) {
+        int[] temp = points[x];
+        points[x] = points[y];
+        points[y] = temp;
+    }
+
+    public double getDistance(int[] coordinate) {
+        int x = coordinate[0], y = coordinate[1];
+        return Math.sqrt(x * x + y * y);
+    }","• Time Complexity: O(N) in average case and O(N2) in the worst case, where N is the length of points.
+• Space Complexity: O(N).",https://leetcode.com/problems/k-closest-points-to-origin/description/
+215,Kth Largest Element in an Array,QuickSelect,15mins,"    private int resIdx;
+    private Random random;
+    public int findKthLargest(int[] nums, int k) {
+        resIdx = nums.length - k;
+        random = new Random();
+        quickSelect(nums, 0, nums.length - 1);
+        return nums[resIdx];
+    }
+    public void quickSelect(int[] nums, int left, int right) {
+        int idx = partition(nums, left, right);
+        if (idx == resIdx) return;
+        if (idx > resIdx) {
+            quickSelect(nums, left, idx - 1);
+        } else {
+            quickSelect(nums, idx + 1, right);
+        }
+    }
+    public int partition(int[] nums, int left, int right) {
+        int randomIdx = random.nextInt(right - left + 1) + left;
+        swap(nums, left, randomIdx);
+        int pivot = nums[left];
+        int j = left;
+        for (int i = left + 1; i <= right; i++) {
+            if (nums[i] < pivot) {
+                j++;
+                swap(nums, i, j);
+            }
+        }
+        swap(nums, j, left);
+        return j;
+    }
+
+    public void swap(int[] nums, int x, int y) {
+        int temp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = temp;
+    }",,https://leetcode.com/problems/kth-largest-element-in-an-array/
+621,Task Scheduler,PriorityQueue,"15mins
+
+need to pay attention on timestamp + 1","class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        PriorityQueue<Task> pq = new PriorityQueue<>((t1, t2) -> t1.timestamp - t2.timestamp);
+        Map<Character, Integer> cnt = new HashMap<>();
+        for (char task : tasks) {
+            cnt.put(task, cnt.getOrDefault(task, 0) + 1);
+        }
+        for (char task : cnt.keySet()) {
+            pq.offer(new Task(task, cnt.get(task)));
+        }
+        int currTime = 0;
+        while (!pq.isEmpty()) {
+            Task currTask = pq.peek();
+            if (currTime >= currTask.timestamp) {
+                pq.poll();
+                currTime++;
+                currTask.timestamp += n + 1;
+                currTask.num--;
+                if (currTask.num != 0) {
+                    pq.offer(currTask);
+                }
+            } else {
+                currTime = currTask.timestamp;
+            }
+        }
+        return currTime;
+    }
+}
+
+class Task {
+    public int timestamp;
+    public char task;
+    public int num;
+    public Task(char task, int num) {
+        timestamp = 0;
+        this.task = task;
+        this.num = num;
+    }
+}",,https://leetcode.com/problems/task-scheduler/description/
+295,Find Median from Data Stream,PriorityQueue,"leftPart是大顶堆，rightPart是小顶堆
+
+始终保持leftpart的个数比rightpart多一个","    private PriorityQueue<Integer> leftPart;
+    private PriorityQueue<Integer> rightPart;
+    public MedianFinder() {
+        leftPart = new PriorityQueue<>((n1, n2) -> n2 - n1);
+        rightPart = new PriorityQueue<>();
+    }
+    
+    public void addNum(int num) {
+        if (leftPart.size() == rightPart.size()) {
+            rightPart.offer(num);
+            leftPart.offer(rightPart.poll());
+        } else {
+            leftPart.offer(num);
+            rightPart.offer(leftPart.poll());
+        }
+    }
+    
+    public double findMedian() {
+        if (leftPart.size() == rightPart.size()) {
+            return (leftPart.peek() + rightPart.peek()) / 2.0;
+        }
+        return leftPart.peek();
+    }",,https://leetcode.com/problems/find-median-from-data-stream/description/
+90,Subsets II,Backtracking,sort → 去掉重复组合,"    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        backtracking(nums, res, new ArrayList<>(), 0);
+        return res;
+    }
+
+    public void backtracking(int[] nums, List<List<Integer>> res, List<Integer> list, int start) {
+        res.add(new ArrayList<>(list));
+        // if (start == nums.length) return;
+        for (int i = start; i < nums.length; i++) {
+            int curr = nums[i];
+            if (i > start && nums[i - 1] == curr) continue;
+            list.add(curr);
+            backtracking(nums, res, list, i + 1);
+            list.remove(list.size() - 1);
+        }
+    }",,https://leetcode.com/problems/subsets-ii/description/
+40,Combination Sum II,Backtracking,在于如何prune,"    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> res = new ArrayList<>();
+        backtracking(candidates, res, new ArrayList<>(), target, 0, 0);
+        return res;
+    }
+
+    public void backtracking(int[] candidates, List<List<Integer>> res, List<Integer> list, int target, int sum, int start) {
+        if (sum == target) {
+            res.add(new ArrayList<>(list));
+            return;
+        }
+        for (int i = start; i < candidates.length; i++) {
+            int curr = candidates[i];
+            if (i > start && curr == candidates[i - 1]) continue;
+            if (sum + curr > target) break;
+            list.add(curr);
+            backtracking(candidates, res, list, target, sum + curr, i + 1);
+            list.remove(list.size() - 1);
+        }
+    }",,https://leetcode.com/problems/combination-sum-ii/
+79,Word Search,Backtracking,10mins,"if (start == word.length()) return true;
+if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(start) != board[x][y] || board[x][y] == '.') return false;",,https://leetcode.com/problems/word-search/
+78,Subsets,Backtracking,2mins,,,https://leetcode.com/problems/subsets/description/
+39,Combination Sum,Backtracking,3mins,,,https://leetcode.com/problems/combination-sum/description/
+46,Permutations,Backtracking,5mins,需要一个visited来记录已经存放过的位置，和combination不一样，这个不需要start,,https://leetcode.com/problems/permutations/description/
+131,Palindrome Partitioning,Backtracking,5mins,先使用中心扩展法，对token进行预处理，再使用backtracking,,https://leetcode.com/problems/palindrome-partitioning/description/
+17,Letter Combinations of a Phone Number,Backtracking,8mins,"先使用map进行查找，再使用backtracking进行组合
+
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<>();
+        if (digits == null || digits.length() == 0) return res;
+        Map<Character, String> map = new HashMap<>();
+        map.put('2', ""abc"");
+        map.put('3', ""def"");
+        map.put('4', ""ghi"");
+        map.put('5', ""jkl"");
+        map.put('6', ""mno"");
+        map.put('7', ""pqrs"");
+        map.put('8', ""tuv"");
+        map.put('9', ""wxyz"");
+        backtracking(res, new StringBuilder(), digits, map, 0);
+        return res;
+    }
+
+    public void backtracking(List<String> res, StringBuilder sb, String digits, Map<Character, String> map, int idx) {
+        if (sb.length() == digits.length()) {
+            res.add(sb.toString());
+            return;
+        }
+        String curr = map.get(digits.charAt(idx));
+        for (int i = 0; i < curr.length(); i++) {
+            sb.append(curr.charAt(i));
+            backtracking(res, sb, digits, map, idx + 1);
+            sb.setLength(sb.length() - 1);
+        }
+    }",,https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
+51,N-Queens,Backtracking,15mins,"根据row来进行填补
+
+检查左右对角线，和正上部分
+
+    private char[][] chessboard;
+    private int n;
+    public List<List<String>> solveNQueens(int n) {
+        chessboard = new char[n][n];
+        this.n = n;
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(chessboard[i], '.');
+        }
+        List<List<String>> res = new ArrayList<>();
+        // fill according to row
+        backtracking(res, 0);
+        return res;
+    }
+
+    public void backtracking(List<List<String>> res, int row) {
+        if (row == n) {
+            List<String> curr = chessboardToString(chessboard);
+            res.add(curr);
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (check(chessboard, row, i)) {
+                chessboard[row][i] = 'Q';
+                backtracking(res, row + 1);
+                chessboard[row][i] = '.';
+            }
+        }
+    }
+
+    public List<String> chessboardToString(char[][] chessboard) {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            list.add(new String(chessboard[i]));
+        }
+        return list;
+    }
+
+    public boolean check(char[][] chessboard, int row, int col) {
+        // diagonal , left part
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (chessboard[i][j] == 'Q') return false;
+        }
+
+        for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+            if (chessboard[i][j] == 'Q') return false;
+        }
+
+        for (int i = row - 1; i >= 0; i--) {
+            if (chessboard[i][col] == 'Q') return false;
+        }
+        return true;
+    }",,https://leetcode.com/problems/n-queens/description/
