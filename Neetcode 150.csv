@@ -970,3 +970,700 @@ if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(s
         }
         return true;
     }",,https://leetcode.com/problems/n-queens/description/
+200,Number of Islands,Graph,2mins,,,https://leetcode.com/problems/number-of-islands/description/
+133,Clone Graph,"BFS, Graph","10mins
+
+没有创建过的才放入bfs queue中，防止尝试死循环","    public Node cloneGraph(Node node) {
+        Map<Node, Node> copyMap = new HashMap<>();
+        Queue<Node> bfsQueue = new LinkedList<>();
+        if (node == null) return null;
+        bfsQueue.offer(node);
+        copyMap.put(node, new Node(node.val));
+        while (!bfsQueue.isEmpty()) {
+            Node curr = bfsQueue.poll();
+            Node copy = copyMap.get(curr);
+            for (Node neighbor : curr.neighbors) {
+                if (!copyMap.containsKey(neighbor)) {
+                    bfsQueue.offer(neighbor);
+                }
+                Node copyNeighbor =  copyMap.getOrDefault(neighbor, new Node(neighbor.val));
+                copy.neighbors.add(copyNeighbor);
+                copyMap.put(neighbor, copyNeighbor);
+            }
+        }
+        return copyMap.get(node);
+    }",,https://leetcode.com/problems/clone-graph/description/
+695,Max Area of Island,Graph,2mins,,,https://leetcode.com/problems/max-area-of-island/description/
+417,Pacific Atlantic Water Flow,Graph,"15mins
+
+从边界开始dfs","    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        int rows = heights.length, cols = heights[0].length;
+        boolean[][] pacific = new boolean[rows][cols];
+        boolean[][] atlantic = new boolean[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            dfs(pacific, heights, i, 0, 0);
+            dfs(atlantic, heights, i, cols - 1, 0);
+        }
+        for (int j = 0; j < cols; j++) {
+            dfs(pacific, heights, 0, j, 0);
+            dfs(atlantic, heights, rows - 1, j, 0);
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (pacific[i][j] && atlantic[i][j]) {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(i);
+                    list.add(j);
+                    res.add(list);
+                }
+            }
+        }
+        return res;
+    }
+
+    public void dfs(boolean[][] ocean, int[][] heights, int x, int y, int prevHeight) {
+        if (x < 0 || x >= heights.length || y < 0 || y >= heights[0].length || ocean[x][y] || heights[x][y] < prevHeight) return;
+        ocean[x][y] = true;
+        dfs(ocean, heights, x + 1, y, heights[x][y]);
+        dfs(ocean, heights, x - 1, y, heights[x][y]);
+        dfs(ocean, heights, x, y + 1, heights[x][y]);
+        dfs(ocean, heights, x, y - 1, heights[x][y]);
+    }",O(M * N),https://leetcode.com/problems/pacific-atlantic-water-flow/description/
+130,Surrounded Regions,Graph,"6mins
+
+也是从边界开始进行dfs","    public void solve(char[][] board) {
+        int rows = board.length, cols = board[0].length;
+        boolean[][] notCaptured = new boolean[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            dfs(notCaptured, board, i, 0);
+            dfs(notCaptured, board, i, cols - 1);
+        }
+
+        for (int j = 0; j < cols; j++) {
+            dfs(notCaptured, board, 0, j);
+            dfs(notCaptured, board, rows - 1, j);
+        }
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (board[i][j] == 'O' && !notCaptured[i][j]) {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+
+    public void dfs(boolean[][] notCaptured, char[][] board, int x, int y) {
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || notCaptured[x][y] || board[x][y] != 'O') return;
+        notCaptured[x][y] = true;
+        dfs(notCaptured, board, x + 1, y);
+        dfs(notCaptured, board, x - 1, y);
+        dfs(notCaptured, board, x, y + 1);
+        dfs(notCaptured, board, x, y - 1);
+    }",,https://leetcode.com/problems/surrounded-regions/description/
+994,Rotting Oranges,"BFS, Graph","10mins
+
+这题tricky的地方在于考虑edge cases， 本是全部都是好的，那么min是0，return 0，如果有坏的 那么return min - 1
+
+如果还有好的橘子，那么return -1","    public int orangesRotting(int[][] grid) {
+        Queue<int[]> bfsQueue = new LinkedList<>();
+        int rows = grid.length, cols = grid[0].length;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 2) {
+                    bfsQueue.offer(new int[]{i, j});
+                }
+            }
+        }
+        int[][] directions = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int min = 0;
+        while (!bfsQueue.isEmpty()) {
+            int size = bfsQueue.size();
+            for (int i = 0; i < size; i++) {
+                int[] curr = bfsQueue.poll();
+                int x = curr[0], y = curr[1];
+                for (int j = 0; j < 4; j++) {
+                    int newX = x + directions[j][0], newY = y + directions[j][1];
+                    if (newX < 0 || newX >= rows || newY < 0 || newY >= cols || grid[newX][newY] != 1) continue;
+                    grid[newX][newY] = 2;
+                    bfsQueue.offer(new int[] {newX, newY});
+                }
+            }
+            min++;
+        }
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 1) {
+                    return -1;
+                }
+            }
+        }
+        return min == 0 ? 0 : min - 1;
+    }",O(M * N),https://leetcode.com/problems/rotting-oranges/description/
+286,Walls and Gates,Graph,5mins,最小距离都应该想到bfs,O(M * N),https://leetcode.com/problems/walls-and-gates/description/
+207,Course Schedule,Graph,6mins,使用map建立graph，再使用一个indegree map → bfs,,https://leetcode.com/problems/course-schedule/description/
+210,Course Schedule II,Graph,8mins,注意edge case,,https://leetcode.com/problems/course-schedule-ii/description/
+684,Redundant Connection,UnionFind,15mins,"主要注意find函数的书写
+
+public int find (int x) {
+       // rootX是旧root
+        int rootX = parents[x];
+        if (x != rootX) {
+            parents[x] =  find(rootX);
+        }
+        // return已经被替换过的新root
+       return parents[x];
+}",,https://leetcode.com/problems/redundant-connection/description/
+323,Number of Connected Components in an Undirected Graph,UnionFind,5mins,UF模版题,,https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/description/
+261,Graph Valid Tree,UnionFind,5mins,,,https://leetcode.com/problems/graph-valid-tree/description/
+127,Word Ladder,"BFS, Graph",15mins,"求最短距离和变换最少次数要想着使用bfs
+
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        Set<String> dict = new HashSet<>();
+        for (String word : wordList) {
+            dict.add(word);
+        }
+        if (!dict.contains(endWord)) return 0;
+        int steps = 0;
+        Queue<String> bfsQueue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        visited.add(beginWord);
+        bfsQueue.offer(beginWord);
+        while (!bfsQueue.isEmpty()) {
+            int size = bfsQueue.size();
+            for (int i = 0; i < size; i++) {
+                String curr = bfsQueue.poll();
+                if (curr.equals(endWord)) return steps + 1;
+                for (int j = 0; j < curr.length(); j++) {
+                    List<String> next = transform(curr, j);
+                    for (String str : next) {
+                        if (visited.contains(str) || !dict.contains(str)) continue;
+                        bfsQueue.offer(str);
+                        visited.add(str);
+                    }
+                }
+            }
+            steps++;
+        }
+        return 0;
+    }
+
+    public List<String> transform(String str, int idx) {
+        char c = str.charAt(idx);
+        char[] arr = str.toCharArray();
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < 26; i++) {
+            if ((char)('a' + i) != c) {
+                arr[idx] = (char)('a' + i);
+            }
+            res.add(new String(arr));
+        }
+        return res;
+    }",,https://leetcode.com/problems/word-ladder/description/
+332,Reconstruct Itinerary,"DFS, Graph, Greedy","Forget → how to construct the map used to avoid duplicately search
+
+sort的目的 → 每次尝试都走最小的","    private int numCity;
+    private Map<String, Map<String, Integer>> startToEndsTicketsNum = new HashMap<>();
+    private Map<String, List<String>> graph = new HashMap<>();
+    public List<String> findItinerary(List<List<String>> tickets) {
+        numCity = tickets.size() + 1;        
+        for (List<String> ticket : tickets) {
+            String start = ticket.get(0), end = ticket.get(1);
+            Map<String, Integer> startToSpecificEndTicketsNum = startToEndsTicketsNum.getOrDefault(start, new HashMap<>());
+            startToSpecificEndTicketsNum.put(end, startToSpecificEndTicketsNum.getOrDefault(end, 0) + 1);
+            startToEndsTicketsNum.put(start, startToSpecificEndTicketsNum);
+            List<String> ends = graph.getOrDefault(start, new ArrayList<>());
+            ends.add(end);
+            graph.put(start, ends);
+        }
+        // If there are multiple valid itineraries, you should return the itinerary that has the smallest lexical order when read as a single string.
+        for (List<String> list : graph.values()) {
+            Collections.sort(list);
+        }
+        List<String> res = new ArrayList<>();
+        res.add(""JFK"");
+        dfs(res, ""JFK"");
+        return res;
+    }
+    
+    public boolean dfs(List<String> res, String depature) {
+        // if the city number that we have visited equals to the numCity, it denotes that current arrangement is feasible
+        if (res.size() == numCity) {
+            return true;
+        }
+        // terminate condition
+        if (!graph.containsKey(depature)) {
+            return false;
+        }
+        List<String> ends =  graph.get(depature);
+        for (int i = 0; i < ends.size(); i++) {
+            String end = ends.get(i);
+            // it means that we have used this ticket before
+            if (startToEndsTicketsNum.get(depature).get(end) == 0) continue;
+            res.add(end);
+            // ticket used
+            startToEndsTicketsNum.get(depature).put(end, startToEndsTicketsNum.get(depature).get(end) - 1);
+            if (dfs(res, end)) return true;
+            // rollback
+            startToEndsTicketsNum.get(depature).put(end, startToEndsTicketsNum.get(depature).get(end) + 1);
+            res.remove(res.size() - 1);
+        }
+        return false;
+    }",,https://leetcode.com/problems/reconstruct-itinerary/description/
+1584,Min Cost to Connect All Points,"Graph, Greedy, UnionFind","Forget → 题目很好，很tricky
+
+最重要的是数组的构造","class Solution {
+    public int minCostConnectPoints(int[][] points) {
+        int n = points.length;
+        int combinationCnt = (n - 1) * n / 2;
+        // [pointA idx in points, pointB idx in points, dist Between A and B]
+        int[][] pointsAndDist = new int[combinationCnt][3];
+        int idx = 0;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                pointsAndDist[idx][0] = i;
+                pointsAndDist[idx][1] = j; 
+                pointsAndDist[idx][2] = getDist(points[i], points[j]);
+                idx++;
+            }
+        }
+        // greedy -> 从最短的距离开始选择
+        Arrays.sort(pointsAndDist, (n1, n2) -> n1[2] - n2[2]);
+        UF uf = new UF(n);
+        int minCost = 0;
+        for (int[] info : pointsAndDist) {
+            int pointAIdx = info[0], pointBIdx = info[1];
+            // 已经链接过
+            if (uf.isConnected(pointAIdx, pointBIdx)) continue;
+            uf.union(pointAIdx, pointBIdx);
+            minCost += info[2];
+        }
+        return minCost;
+    }
+
+    public int getDist(int[] x, int[] y) {
+        return Math.abs(x[0] - y[0]) + Math.abs(x[1] - y[1]);
+    }
+}
+
+class UF {
+    private int[] parents;
+    public UF(int n) {
+        parents = new int[n];
+        for (int i = 0; i < n; i++) {
+            parents[i] = i;
+        }
+    }
+
+    public int find(int x) {
+        int rootX = parents[x];
+        if (x != rootX) {
+            parents[x] = find(rootX);
+        }
+        return parents[x];
+    }
+
+    public void union(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rootX == rootY) return;
+        parents[rootX] = rootY;
+    }
+
+    public boolean isConnected(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        return rootX == rootY;
+    }
+}",,https://leetcode.com/problems/min-cost-to-connect-all-points/description/
+743,Network Delay Time,"Dijkstra, Graph",使用pq或者queue都是可以的,"    public int networkDelayTime(int[][] times, int n, int k) {
+        Map<Integer, List<int[]>> graph = new HashMap<>();
+        for (int[] time : times) {
+            int start = time[0], end = time[1], cost = time[2];
+            List<int[]> list = graph.getOrDefault(start, new ArrayList<>());
+            int[] info = new int[2];
+            info[0] = end;
+            info[1] = cost;
+            list.add(info);
+            graph.put(start, list);
+        }
+        // record the min distance
+        int[] fromStartToCurrDist = new int[n + 1];
+
+        Arrays.fill(fromStartToCurrDist, Integer.MAX_VALUE);
+        dijkstra(graph, fromStartToCurrDist, k);
+        int res = 0;
+        // 因为0的位置一直没有用
+        for (int i = 1; i <=n ; i++) {
+            int distance = fromStartToCurrDist[i];
+            if (distance == Integer.MAX_VALUE) return -1;
+            res = Math.max(res, distance);
+        }
+        return res;
+    }
+
+    public void dijkstra(Map<Integer, List<int[]>> graph, int[] fromStartToCurrDist, int start) {
+        // 其实queue和pq都可以，pq相对会快一点
+        // 先排耗时小的
+        PriorityQueue<int[]> pq = new PriorityQueue<>((n1, n2) -> n1[1] - n2[1]);
+        pq.offer(new int[] {start, 0});
+        fromStartToCurrDist[start] = 0;
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int currEnd = curr[0];
+            if (!graph.containsKey(currEnd)) continue;
+            for (int[] nextEndInfo : graph.get(currEnd)) {
+                int fromStartToNextEndDist = fromStartToCurrDist[currEnd] + nextEndInfo[1];
+                if (fromStartToNextEndDist < fromStartToCurrDist[nextEndInfo[0]]) {
+                    fromStartToCurrDist[nextEndInfo[0]] = fromStartToNextEndDist;
+                    pq.offer(nextEndInfo);
+                }
+            }
+        }
+    }",,https://leetcode.com/problems/network-delay-time/description/
+778,Swim in Rising Water,"BFS, Graph",用最小堆当作bfs queue用来取queue中的最大值,"    public int swimInWater(int[][] grid) {
+        int rows = grid.length, cols = grid[0].length;
+        int[][] dirs = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        PriorityQueue<int[]> pq = new PriorityQueue<>((n1, n2) -> n1[2] - n2[2]);
+        pq.offer(new int[] {0, 0, grid[0][0]});
+        int minTime = 0;
+        boolean[][] visited = new boolean[rows][cols];
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int x = curr[0], y = curr[1], height = curr[2];
+            minTime = Math.max(minTime, height);
+            if (x == rows -1 && y == cols - 1) return minTime;
+            for (int i = 0; i < 4; i++) {
+                int newX = dirs[i][0] + x;
+                int newY = dirs[i][1] + y;
+                if (newX < 0 || newX >= grid.length || newY < 0 || newY >= grid[0].length || visited[newX][newY]) continue;
+                pq.offer(new int[] {newX, newY, grid[newX][newY]});
+                visited[newX][newY] = true;
+            }
+        }
+        return -1;
+    }",,https://leetcode.com/problems/swim-in-rising-water/description/
+787,Cheapest Flights Within K Stops,"BFS, Graph","忘记了 bfs queue里面存放的具体内容
+
+应该存放: int[] {position, previous route cost}
+bfs结束条件是层数和queue是否为空","    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        if (src == dst) return 0;
+        Map<Integer, List<int[]>> graph = new HashMap<>();
+        for (int[] fight : flights) {
+            int start = fight[0];
+            int[] endPoint = new int[] {fight[1], fight[2]};
+            List<int[]> list = graph.getOrDefault(start, new ArrayList<>());
+            list.add(endPoint);
+            graph.put(start, list);
+        }
+        int[] costArr = new int[n];
+        Arrays.fill(costArr, Integer.MAX_VALUE);
+        // 保证了放入queue的int[] {position, cost} 这个cost代表这个线路之前的cost
+        Queue<int[]> bfs = new LinkedList<>();
+        bfs.offer(new int[] {src, 0});
+        int steps = 0;
+        while (!bfs.isEmpty() && steps <= k) {
+            int size = bfs.size();
+            for (int i = 0; i < size; i++) {
+                int[] start = bfs.poll();
+                if (!graph.containsKey(start[0])) continue;
+                for (int[] end : graph.get(start[0])) {
+                    int currCost = start[1] + end[1];
+                    if (currCost < costArr[end[0]]) {
+                        costArr[end[0]] = currCost;
+                        bfs.offer(new int[] {end[0], costArr[end[0]]});
+                    }
+                }
+            }
+            steps++;
+        }
+        return costArr[dst] == Integer.MAX_VALUE ? -1 : costArr[dst];
+    }",,https://leetcode.com/problems/cheapest-flights-within-k-stops/description/
+269,Alien Dictionary,"BFS, Graph",拓扑排序,"    public String alienOrder(String[] words) {
+        Map<Character, Integer> indegree = new HashMap<>();
+        Map<Character, List<Character>> graph = new HashMap<>();
+        Set<Character> unique = new HashSet<>();
+        for (int i = 0; i < words.length - 1; i++) {
+            String currWord = words[i], nextWord = words[i + 1];
+            int p1 = 0, p2 = 0;
+            while (p1 < currWord.length() && p2 < nextWord.length()) {
+                char c1 = currWord.charAt(p1), c2 = nextWord.charAt(p2);
+                if (c1 == c2) {
+                    p1++;
+                    p2++;
+                } else {
+                    indegree.put(c2, indegree.getOrDefault(c2, 0) + 1);
+                    List<Character> list = graph.getOrDefault(c1, new ArrayList<>());
+                    list.add(c2);
+                    graph.put(c1, list);
+                    break;
+                }
+            }
+            // 排除 abc ab 情况；如果两个word是完全相同的，p2 也会等于nextword长度，这种不能排除
+            if (p2 == nextWord.length() && currWord.length() > nextWord.length()) return """";
+        }
+        for (String word : words) {
+            for (char c : word.toCharArray()) {
+                unique.add(c);
+            }
+        }
+        Queue<Character> bfs = new LinkedList<>();
+        for (char c : unique) {
+            if (!indegree.containsKey(c)) {
+                bfs.offer(c);
+            }
+        }
+        String res = """";
+        while (!bfs.isEmpty()) {
+            char curr = bfs.poll();
+            res += curr;
+            if (!graph.containsKey(curr)) continue;
+            for (char c : graph.get(curr)) {
+                indegree.put(c, indegree.get(c) - 1);
+                if (indegree.get(c) == 0) {
+                    bfs.offer(c);
+                }
+            }
+        }
+        return res.length() == unique.size() ? res : """";
+    }",,https://leetcode.com/problems/alien-dictionary/description/
+70,Climbing Stairs,1D Dynamic Programming,1mins,dp[i] = dp[i - 1] + dp[i - 2],"Space O(n)
+Time O(n)",https://leetcode.com/problems/climbing-stairs/
+746,Min Cost Climbing Stairs,1D Dynamic Programming,"这题一定要画图才能搞清楚
+
+没有想象中那么简单 → 把梯子画出来，横向的是层数，纵向的是cost
+
+","    public int minCostClimbingStairs(int[] cost) {
+        // The array's length should be 1 longer than the length of cost
+        // This is because we can treat the ""top floor"" as a step to reach
+        int minimumCost[] = new int[cost.length + 1];
+        
+        // Start iteration from step 2, since the minimum cost of reaching
+        // step 0 and step 1 is 0
+        for (int i = 2; i < minimumCost.length; i++) {
+            int takeOneStep = minimumCost[i - 1] + cost[i - 1];
+            int takeTwoSteps = minimumCost[i - 2] + cost[i - 2];
+            minimumCost[i] = Math.min(takeOneStep, takeTwoSteps);
+        }
+        
+        // The final element in minimumCost refers to the top floor
+        return minimumCost[minimumCost.length - 1];
+    }","Space O(n)
+Time O(n)",https://leetcode.com/problems/min-cost-climbing-stairs/
+198,House Robber,1D Dynamic Programming,3mins,注意edge case，如果没有住户 或者只有一个住户,"Space O(n)
+Time O(n)",https://leetcode.com/problems/house-robber/
+213,House Robber II,1D Dynamic Programming,两种rob的方式，不同的range，所以要考虑不同的偏移量,"    public int rob(int[] nums) {
+        if (nums.length == 0) return 0;
+        if (nums.length == 1) return nums[0];
+        int max1 = robHelper(nums, 0, nums.length - 2);
+        int max2 = robHelper(nums, 1, nums.length - 1);
+        return Math.max(max1, max2);
+    }
+
+    public int robHelper(int[] nums, int left, int right) {
+        int n = right - left + 1;
+        if (n == 1) return nums[left];
+        int[] dp = new int[n];
+        dp[0] = nums[left];
+        dp[1] = Math.max(nums[left], nums[left + 1]);
+        for (int i = 2; i <= right - left; i++) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i + left]);
+        }
+        return dp[n - 1];
+    }","Space O(n)
+Time O(n)",https://leetcode.com/problems/house-robber-ii/
+5,Longest Palindromic Substring,Two Pointer,ExpandAroundCenter,"    public String longestPalindrome(String s) {
+        String res = """";
+        for (int i = 0; i < s.length(); i++) {
+            String even = expandAroundCenter(s, i, i + 1);
+            String odd = expandAroundCenter(s, i, i);
+            String bigger = even.length() > odd.length() ? even : odd;
+            if (bigger.length() > res.length()) {
+                res = bigger;
+            }
+        }
+        return res;
+    }
+
+    public String expandAroundCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return s.substring(left + 1, right);
+    }","Space O(1)
+Time O(n^2)",https://leetcode.com/problems/longest-palindromic-substring/description/
+647,Palindromic Substrings,Two Pointer,ExpandAroundCenter,记录个数,"Space O(1)
+Time O(n^2)",https://leetcode.com/problems/palindromic-substrings/description/
+91,Decode Ways,1D Dynamic Programming,"状态与选择
+
+只有两种选择 片段长度为1 或者 为2
+
+然后把之前的合法分割次数累加","    public int numDecodings(String s) {
+        int n = s.length();
+        if (n == 0) return 0;
+        if (s.charAt(0) == '0') return 0;
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            if (s.charAt(i - 1) != '0') {
+                dp[i] += dp[i - 1];
+            }
+            if (s.charAt(i - 2) != '0' && Integer.parseInt(s.substring(i - 2, i)) <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        return dp[n];
+    }","Space O(n)
+Time O(n)",https://leetcode.com/problems/decode-ways/description/
+322,Coin Change,1D Dynamic Programming,当curr amount 大于 当前coin面值的时候才能进行兑换，但是此时的兑换可能不是兑换次数最少的，所以需要进行比较,"    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (int j = 0; j < coins.length; j++) {
+                if (i >= coins[j] && dp[i - coins[j]] != Integer.MAX_VALUE) {
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
+    }","Space O(n)
+Time O(n * m)",https://leetcode.com/problems/coin-change/
+152,Maximum Product Subarray,1D Dynamic Programming,"自成一体 或者 和前面链接起来
+正负数的存在 → 所以需要min 和 max数组","    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        int[] min = new int[n + 1];
+        int[] max = new int[n + 1];
+        min[0] = 1;
+        max[0] = 1;
+        // 1 2 3 -12 -48
+        // 1 2 6 -2  4
+        int res = Integer.MIN_VALUE;
+        for (int i = 1; i <= n; i++) {
+            // 自成一体 或者 和前面链接起来
+            // 正负数的存在
+            min[i] = Math.min(Math.min(min[i - 1] * nums[i - 1], nums[i - 1]), max[i - 1] * nums[i - 1]);
+            max[i] = Math.max(Math.max(max[i - 1] * nums[i - 1], nums[i - 1]), min[i - 1] * nums[i - 1]);
+            res = Math.max(res, max[i]);
+        }
+        return res;
+    }","Space O(n)
+Time O(n)",https://leetcode.com/problems/maximum-product-subarray/description/
+139,Word Break,1D Dynamic Programming,动态规划和记忆搜索本质是一样的 → 动态规划是自底而上，记忆搜索是自上而下,"    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordDictSet = new HashSet<>(wordDict);
+        int n = s.length();
+        if (n == 0) return false;
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                String fragment = s.substring(j, i);
+                // 此时的fragment能被查找到且之前的substring也能被划分
+                if (dp[j] && wordDictSet.contains(fragment)) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[n];
+    }
+
+
+// 记忆搜索
+   private Set<String> dict;
+    private int[] memo;
+    public boolean wordBreak(String s, List<String> wordDict) {
+        dict = new HashSet<>(wordDict);
+        memo = new int[s.length()];
+        return wordBreakHelper(s, 0);
+    }
+
+    public boolean wordBreakHelper(String s, int idx) {
+        if (idx == s.length()) {
+            return true;
+        }
+        if (memo[idx] == 1) return false;
+        for (int i = idx; i < s.length(); i++) {
+            String token = s.substring(idx, i + 1);
+            if (!dict.contains(token)) {
+                continue;
+            }
+            if (wordBreakHelper(s, i + 1)) {
+                return true;
+            }
+        }
+        memo[idx] = 1;
+        return false;
+    }","Space O(n)
+Time O(n^2)",https://leetcode.com/problems/word-break/description/
+300,Longest Increasing Subsequence,1D Dynamic Programming,最长的subsequence不一定在最后,"    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        if (n == 0) return 0;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        int res = 1;
+        for (int i = 1; i < n; i++) {
+            int curr = nums[i];
+            for (int j = 0; j < i; j++) {
+                int prev = nums[j];
+                if (prev < curr) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }","Space O(n)
+Time O(n^2)",https://leetcode.com/problems/longest-increasing-subsequence/description/
+416,Partition Equal Subset Sum,1D Dynamic Programming,背包问题,"    public boolean canPartition(int[] nums) {
+        if (nums.length == 0) return false;
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum % 2 != 0) return false;
+        sum /= 2;
+        boolean[] dp = new boolean[sum + 1];
+        dp[0] = true;
+        // 类似于换硬币， 但是硬币只能用一次，所以硬币的循环应该在外层
+        for (int curr : nums) {
+            // 从最大值开始到当前面值
+            for (int j = sum; j >= curr; j--) {
+                // 判断是否能换
+                dp[j] |= dp[j - curr];
+            }
+        }
+        return dp[sum];
+    }
+
+
+
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for (int num : nums) sum += num;
+        // 和为奇数时，不可能划分成两个和相等的集合
+        if (sum % 2 != 0) return false;
+        int n = nums.length;
+        sum = sum / 2;
+        boolean[][] dp = new boolean[n + 1][sum + 1];
+        // base case
+        for (int i = 0; i <= n; i++)
+            dp[i][0] = true;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= sum; j++) {
+                if (j - nums[i - 1] < 0) {
+                    // 背包容量不足，不能装入第 i 个物品
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    // 装入或不装入背包
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
+                }
+            }
+        }
+        return dp[n][sum];
+    }",,https://leetcode.com/problems/partition-equal-subset-sum/description/
+,,,,,,
+,,,,,,
