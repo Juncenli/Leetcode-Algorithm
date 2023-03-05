@@ -1,9 +1,9 @@
-﻿Question Number,Question Name,Tag,Time Using,Conclusion,Complexity,URL
-217,Contains Duplicate,"Array, HashSet",1mins,set.add() 的简单运用,Time O(n) Space O(n),https://leetcode.com/problems/contains-duplicate/description/
-242,Valid Anagram,"Array, HashSet",1mins,,,https://leetcode.com/problems/valid-anagram/description/
-1,Two Sum,"Array, HashSet",1mins,,,https://leetcode.com/problems/two-sum/description/
-49,Group Anagrams,"Array, HashSet",2mins,可以用char[] arr来记录cnt，这样new string的时候 可以直接用,,https://leetcode.com/problems/group-anagrams/description/
-347,Top K Frequent Elements,"Array, QuickSelect",12mins,quickSelect 模版题,Time O(n) Space O(n),https://leetcode.com/problems/top-k-frequent-elements/description/
+﻿Question Number,Question Name,Tag,Time Using,Conclusion,Complexity,URL,Files & media
+217,Contains Duplicate,"Array, HashSet",1mins,set.add() 的简单运用,Time O(n) Space O(n),https://leetcode.com/problems/contains-duplicate/description/,
+242,Valid Anagram,"Array, HashSet",1mins,,,https://leetcode.com/problems/valid-anagram/description/,
+1,Two Sum,"Array, HashSet",1mins,,,https://leetcode.com/problems/two-sum/description/,
+49,Group Anagrams,"Array, HashSet",2mins,可以用char[] arr来记录cnt，这样new string的时候 可以直接用,,https://leetcode.com/problems/group-anagrams/description/,
+347,Top K Frequent Elements,"Array, QuickSelect",12mins,quickSelect 模版题,Time O(n) Space O(n),https://leetcode.com/problems/top-k-frequent-elements/description/,
 238,Product of Array Except Self,Array,"8mins
 
 一开始res[i] indicates: 左边的product except itself
@@ -23,12 +23,12 @@
             res[i] *= rightProduct;
         }
         return res;
-    }",,https://leetcode.com/problems/product-of-array-except-self/
+    }",,https://leetcode.com/problems/product-of-array-except-self/,
 36,Valid Sudoku,Array,6mins,"开辟额外数组来进行记录
 
 遇到重复，那么return false","Time O(1) Space O(1)
 
-constant",https://leetcode.com/problems/valid-sudoku/
+constant",https://leetcode.com/problems/valid-sudoku/,
 271,Encode and Decode Strings,String,"8mins
 
 len + delimiter + word
@@ -55,16 +55,16 @@ s.indexOf(”Delimiter”, startIdx)","    public String encode(List<String> str
             res.add(word);
         }
         return res;
-    }",,
+    }",,,
 128,Longest Consecutive Sequence,"Array, HashSet","3mins
 
 ","注意edge case 原本数组可能为空
 
-所以初始化 int maxLen = 0;",Time O(n) Space O(n),https://leetcode.com/problems/longest-consecutive-sequence/description/
-125,Valid Palindrome,"String, Two Pointer",1mins,,,
+所以初始化 int maxLen = 0;",Time O(n) Space O(n),https://leetcode.com/problems/longest-consecutive-sequence/description/,
+125,Valid Palindrome,"String, Two Pointer",1mins,,,,
 167,Two Sum II - Input Array Is Sorted,Two Pointer,3mins,"sort 过后的 一定得想到two point来逼近
 
-另外一个是二分法",Time O(n) Space O(1),https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/
+另外一个是二分法",Time O(n) Space O(1),https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/,
 15,3Sum,Two Pointer,8mins,"注意去重
 
 使用 continue 和 while
@@ -73,10 +73,10 @@ while (left < right && nums[right] == nums[--right]);
 
 while (left < right && nums[left] == nums[++left]);
 
-因为right和left本来就要移动，所以可以使用此写法",Time O(nlogn+n^2),https://leetcode.com/problems/3sum/
+因为right和left本来就要移动，所以可以使用此写法",Time O(nlogn+n^2),https://leetcode.com/problems/3sum/,
 11,Container With Most Water,Two Pointer,2mins,"当宽变小，只有高点大，才能使得面积变大的可能
 
-所以pointer移动规则，height低的移动",Time O(n) Space O(1),https://leetcode.com/problems/container-with-most-water/description/
+所以pointer移动规则，height低的移动",Time O(n) Space O(1),https://leetcode.com/problems/container-with-most-water/description/,
 42,Trapping Rain Water,Two Pointer,"Forgot the details
 
 首尾双指针保持左右边界高度","    public int trap(int[] height) {
@@ -99,11 +99,11 @@ while (left < right && nums[left] == nums[++left]);
             }
         }
         return sum;
-    }",Time O(n) Space O(1),https://leetcode.com/problems/trapping-rain-water/
-121,Best Time to Buy and Sell Stock,Array,1mins,,Time O(n) Space O(1),https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
+    }",Time O(n) Space O(1),https://leetcode.com/problems/trapping-rain-water/,
+121,Best Time to Buy and Sell Stock,Array,1mins,,Time O(n) Space O(1),https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/,
 3,Longest Substring Without Repeating Characters,"HashMap, Sliding Window",3mins,"shrink condition
 
-while (cntMap.get(curr) > 1)",Time O(n) Space O(n),https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+while (cntMap.get(curr) > 1)",Time O(n) Space O(n),https://leetcode.com/problems/longest-substring-without-repeating-characters/description/,
 424,Longest Repeating Character Replacement,"Greedy, HashMap, Sliding Window","5mins
 
 保留窗口了cnt最多的character → 使得最长","1、什么时候应该扩大窗口？
@@ -116,7 +116,7 @@ while (cntMap.get(curr) > 1)",Time O(n) Space O(n),https://leetcode.com/problems
 
 
 不用更新 windowMaxCount
-因为只有 windowMaxCount 变得更大的时候才可能获得更长的重复子串，才会更新 res",Time O(n) Space O(n),https://leetcode.com/problems/longest-repeating-character-replacement/description/
+因为只有 windowMaxCount 变得更大的时候才可能获得更长的重复子串，才会更新 res",Time O(n) Space O(n),https://leetcode.com/problems/longest-repeating-character-replacement/description/,
 567,Permutation in String,"HashMap, Sliding Window",10mins,"需要两个hashmap来分别记录
 
 return trueif one of s1's permutations is the substring of s2  → 本质是anagram
@@ -151,8 +151,8 @@ return trueif one of s1's permutations is the substring of s2  → 本质是a
             }
         }
         return false;
-    }",Time O(n) Space O(n),https://leetcode.com/problems/permutation-in-string/
-76,Minimum Window Substring,"HashMap, Sliding Window",8mins,经典模版题,Time O(m+n),https://leetcode.com/problems/minimum-window-substring/description/
+    }",Time O(n) Space O(n),https://leetcode.com/problems/permutation-in-string/,
+76,Minimum Window Substring,"HashMap, Sliding Window",8mins,经典模版题,Time O(m+n),https://leetcode.com/problems/minimum-window-substring/description/,
 239,Sliding Window Maximum,"MaxQueue, Sliding Window",8mins,"利用deque来实现mxaQueue, 这样就能保持窗口中的最大值
 
     public int[] maxSlidingWindow(int[] nums, int k) {
@@ -180,12 +180,12 @@ return trueif one of s1's permutations is the substring of s2  → 本质是a
             }
         }
         return maxArr;
-    }",Time O(n) Space O(n),https://leetcode.com/problems/sliding-window-maximum/description/
-20,Valid Parentheses,"HashMap, Stack",3mins,right parentheses是key， left是value,Time O(n) Space O(n),https://leetcode.com/problems/valid-parentheses/description/
+    }",Time O(n) Space O(n),https://leetcode.com/problems/sliding-window-maximum/description/,
+20,Valid Parentheses,"HashMap, Stack",3mins,right parentheses是key， left是value,Time O(n) Space O(n),https://leetcode.com/problems/valid-parentheses/description/,
 155,Min Stack,Stack,5mins,"Deque<Integer> origin;
 Deque<Integer> minStk;
 
-minStk的作用是保持最小状态",,https://leetcode.com/problems/min-stack/description/
+minStk的作用是保持最小状态",,https://leetcode.com/problems/min-stack/description/,
 150,Evaluate Reverse Polish Notation,Stack,"8mins
 
 如果要使用deque来模拟stack，那么一定要使用offerLast and pollLast, 这样才不会出错","    public int evalRPN(String[] tokens) {
@@ -213,7 +213,7 @@ minStk的作用是保持最小状态",,https://leetcode.com/problems/min-stack/d
             }
         }
         return stk.pollLast();
-    }",,https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
+    }",,https://leetcode.com/problems/evaluate-reverse-polish-notation/description/,
 22,Generate Parentheses,Backtracking,"10mins
 
 
@@ -240,7 +240,7 @@ minStk的作用是保持最小状态",,https://leetcode.com/problems/min-stack/d
             backtracking(res, sb, leftCnt, rightCnt + 1, n);
             sb.setLength(sb.length() - 1);
         }
-    }",,https://leetcode.com/problems/generate-parentheses/description/
+    }",,https://leetcode.com/problems/generate-parentheses/description/,
 140,Word Break II,Backtracking,直接backtracking暴力搜索,"public List<String> wordBreak(String s, List<String> wordDict) {
         StringBuilder sb = new StringBuilder();
         List<String> res = new ArrayList<>();
@@ -267,10 +267,10 @@ minStk的作用是保持最小状态",,https://leetcode.com/problems/min-stack/d
             backtracking(res, sb, dict, s, i + 1);
             sb.setLength(len);
         }
-    }",,https://leetcode.com/problems/word-break-ii/
+    }",,https://leetcode.com/problems/word-break-ii/,
 739,Daily Temperatures,Stack,"5mins
 
-monotonic （/ˌmɑnəˈtɑnɪk/） stack的运用， 放入的是idx",模版框架 for → while （pop）,Time O(n) Space O(n),https://leetcode.com/problems/daily-temperatures/
+monotonic （/ˌmɑnəˈtɑnɪk/） stack的运用， 放入的是idx",模版框架 for → while （pop）,Time O(n) Space O(n),https://leetcode.com/problems/daily-temperatures/,
 853,Car Fleet,Stack,"单调最大栈
 
 在后面的车子: 到达终点所用的时间小于前面的车子，则一定能形成车队","    public int carFleet(int target, int[] position, int[] speed) {
@@ -291,7 +291,7 @@ monotonic （/ˌmɑnəˈtɑnɪk/） stack的运用， 放入的是idx",模版框
             stk.push(time);
         }
         return stk.size();
-    }",,https://leetcode.com/problems/car-fleet/description/
+    }",,https://leetcode.com/problems/car-fleet/description/,
 84,Largest Rectangle in Histogram,Stack,"单调最大栈，放入的是idx
 
 min height → max height
@@ -317,15 +317,15 @@ min height → max height
       monoMinStk.push(i);
      }
    return maxArea;
-}",Time O(n) Space O(n),https://leetcode.com/problems/largest-rectangle-in-histogram/description/
-704,Binary Search,BinarySearch,二分模版,,Time O(logn) Space O(1),https://leetcode.com/problems/binary-search/description/
+}",Time O(n) Space O(n),https://leetcode.com/problems/largest-rectangle-in-histogram/description/,
+704,Binary Search,BinarySearch,二分模版,,Time O(logn) Space O(1),https://leetcode.com/problems/binary-search/description/,
 74,Search a 2D Matrix,BinarySearch,5mins,"把二维二分搜索压缩成一维度的
 
 int left = 0, right = m * n - 1;
 
 int mid = left + (right - left) / 2;
 int x = mid / n;
-int y = mid % n;",O(log(m * n)),https://leetcode.com/problems/search-a-2d-matrix/description/
+int y = mid % n;",O(log(m * n)),https://leetcode.com/problems/search-a-2d-matrix/description/,
 875,Koko Eating Bananas,BinarySearch,"难点在于如何构造单调递减函数
 
 f(x)是关于速度x的单调递减函数(速度越快所用时间越短)，然后求左边界[1, maxSpeed]","public int minEatingSpeed(int[] piles, int h) {
@@ -359,7 +359,7 @@ f(x)是关于速度x的单调递减函数(速度越快所用时间越短)，然�
             }
         }
         return hours;
-    }",O(n⋅logm),https://leetcode.com/problems/koko-eating-bananas/
+    }",O(n⋅logm),https://leetcode.com/problems/koko-eating-bananas/,
 153,Find Minimum in Rotated Sorted Array,BinarySearch,二分法模版：和nums[right]做比较,"public int findMin(int[] nums) {
      int len = nums.length;
      int left = 0, right = len - 1;
@@ -372,9 +372,9 @@ f(x)是关于速度x的单调递减函数(速度越快所用时间越短)，然�
          }
        }
    return nums[left];
-}",logn,https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/
-33,Search in Rotated Sorted Array,BinarySearch,先找到pivot，然后在左右区间分别搜索target（因为pivot的值是最小值）,,,https://leetcode.com/problems/search-in-rotated-sorted-array/description/
-981,Time Based Key-Value Store,BinarySearch,,,,https://leetcode.com/problems/time-based-key-value-store/description/
+}",logn,https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/,
+33,Search in Rotated Sorted Array,BinarySearch,先找到pivot，然后在左右区间分别搜索target（因为pivot的值是最小值）,,,https://leetcode.com/problems/search-in-rotated-sorted-array/description/,
+981,Time Based Key-Value Store,BinarySearch,,,,https://leetcode.com/problems/time-based-key-value-store/description/,
 4,Median of Two Sorted Arrays,BinarySearch,"注意edge cases的处理
 
 明白题意","class TimeMap {
@@ -417,18 +417,18 @@ class Element {
         this.value = value;
         this.timestamp = timestamp;
     }
-}",,https://leetcode.com/problems/median-of-two-sorted-arrays/description/
-4,Median of Two Sorted Arrays,BinarySearch,,,,https://leetcode.com/problems/median-of-two-sorted-arrays/description/
-206,Reverse Linked List,"LinkedList, Recursion",1mins,,,
-21,Merge Two Sorted Lists,"LinkedList, Two Pointer",1mins,,,https://leetcode.com/problems/merge-two-sorted-lists/description/
+}",,https://leetcode.com/problems/median-of-two-sorted-arrays/description/,
+4,Median of Two Sorted Arrays,BinarySearch,,,,https://leetcode.com/problems/median-of-two-sorted-arrays/description/,
+206,Reverse Linked List,"LinkedList, Recursion",1mins,,,,
+21,Merge Two Sorted Lists,"LinkedList, Two Pointer",1mins,,,https://leetcode.com/problems/merge-two-sorted-lists/description/,
 143,Reorder List,"LinkedList, Stack",5mins,"需要一个stack来得到lastnode, 还有三个指针在不停的变换，curr, next, last
 
-while break的条件(next == last || next == last.next) 奇偶数",,https://leetcode.com/problems/reorder-list/description/
+while break的条件(next == last || next == last.next) 奇偶数",,https://leetcode.com/problems/reorder-list/description/,
 19,Remove Nth Node From End of List,"DummyNode, LinkedList, Two Pointer",pay attention on details,"需要使用双指针，实现one pass
 
 我们找的是前一个node，所以还要考虑原本链表没有前一个node的情况，所以需要dummy先给原链表接上
 
-return dummy.next",,https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+return dummy.next",,https://leetcode.com/problems/remove-nth-node-from-end-of-list/,
 138,Copy List with Random Pointer,"Deep Copy, LinkedList",8mins,"deep copy的题都要用bfs和map
 
 类似于copy graph，动作同步
@@ -460,9 +460,9 @@ class Solution {
         }
         return copyMap.get(head);
     }
-}",,https://leetcode.com/problems/copy-list-with-random-pointer/description/
-2,Add Two Numbers,"DummyNode, LinkedList, Two Pointer",5mins,while (l1 != null || l2 != null || carry != 0),,https://leetcode.com/problems/add-two-numbers/description/
-141,Linked List Cycle,"LinkedList, Two Pointer",1mins,,,https://leetcode.com/problems/linked-list-cycle/description/
+}",,https://leetcode.com/problems/copy-list-with-random-pointer/description/,
+2,Add Two Numbers,"DummyNode, LinkedList, Two Pointer",5mins,while (l1 != null || l2 != null || carry != 0),,https://leetcode.com/problems/add-two-numbers/description/,
+141,Linked List Cycle,"LinkedList, Two Pointer",1mins,,,https://leetcode.com/problems/linked-list-cycle/description/,
 287,Find the Duplicate Number,"Floyd's Algorithm, LinkedList, Two Pointer",5mins,"public int findDuplicate(int[] nums) {
       int slowIdx = 0, fastIdx = 0; 
       while (true) {
@@ -477,13 +477,13 @@ class Solution {
          return flag;
        }
     }
-}",Time O(n) Space O(1),https://leetcode.com/problems/find-the-duplicate-number/description/
+}",Time O(n) Space O(1),https://leetcode.com/problems/find-the-duplicate-number/description/,
 146,LRU Cache,"DoubleLinkedList, HashMap",20mins,"需要自己建造DoubleLinkedList 对应有method →  moveToHead, removeNode, addToHead
 
 注意细节","• Time complexity : O(1) both for put and get.
 
-• Space complexity : O(capacity) since the space is used only for a hashmap and double linked list with at most capacity + 1 elements.",https://leetcode.com/problems/lru-cache/description/
-23,Merge k Sorted Lists,"LinkedList, PriorityQueue",5mins,,,
+• Space complexity : O(capacity) since the space is used only for a hashmap and double linked list with at most capacity + 1 elements.",https://leetcode.com/problems/lru-cache/description/,
+23,Merge k Sorted Lists,"LinkedList, PriorityQueue",5mins,,,,
 25,Reverse Nodes in k-Group,"LinkedList, Recursion",forgot → 巧妙的使用递归,"    public ListNode reverseKGroup(ListNode head, int k) {
         if (head == null) return null;
         ListNode a = head, b = head;
@@ -506,12 +506,12 @@ class Solution {
             curr = temp;
         }
         return pre;
-    }",,https://leetcode.com/problems/reverse-nodes-in-k-group/description/
-226,Invert Binary Tree,Tree,1mins,Post Order Traversal → 构造,,https://leetcode.com/problems/invert-binary-tree/description/
-104,Maximum Depth of Binary Tree,Tree,1mins,Post Order Traversal → 算高度,,https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
-543,Diameter of Binary Tree,Tree,2mins,结合maxdepth method,,https://leetcode.com/problems/diameter-of-binary-tree/description/
-110,Balanced Binary Tree,Tree,2mins,结合maxdepth method,,https://leetcode.com/problems/balanced-binary-tree/description/
-100,Same Tree,Tree,2mins,Preorder traversal,,https://leetcode.com/problems/same-tree/description/
+    }",,https://leetcode.com/problems/reverse-nodes-in-k-group/description/,
+226,Invert Binary Tree,Tree,1mins,Post Order Traversal → 构造,,https://leetcode.com/problems/invert-binary-tree/description/,
+104,Maximum Depth of Binary Tree,Tree,1mins,Post Order Traversal → 算高度,,https://leetcode.com/problems/maximum-depth-of-binary-tree/description/,
+543,Diameter of Binary Tree,Tree,2mins,结合maxdepth method,,https://leetcode.com/problems/diameter-of-binary-tree/description/,
+110,Balanced Binary Tree,Tree,2mins,结合maxdepth method,,https://leetcode.com/problems/balanced-binary-tree/description/,
+100,Same Tree,Tree,2mins,Preorder traversal,,https://leetcode.com/problems/same-tree/description/,
 572,Subtree of Another Tree,Tree,"4mins
 
 结合same tree","class Solution {
@@ -530,11 +530,11 @@ class Solution {
         boolean right = isSameTree(p.right, q.right);
         return left && right;
     }
-}",,https://leetcode.com/problems/subtree-of-another-tree/description/
-235,Lowest Common Ancestor of a Binary Search Tree,BST,take advantage of the property of BST → range,,,https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+}",,https://leetcode.com/problems/subtree-of-another-tree/description/,
+235,Lowest Common Ancestor of a Binary Search Tree,BST,take advantage of the property of BST → range,,,https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/,
 199,Binary Tree Right Side View,"BFS, Level Traversal, Tree",3mins,"if (i == size - 1) {
     res.add(curr.val);
-}",,https://leetcode.com/problems/binary-tree-right-side-view/description/
+}",,https://leetcode.com/problems/binary-tree-right-side-view/description/,
 1448,Count Good Nodes in Binary Tree,Tree,"8mins
 
 需要keep一个最大值，当目前值是大于或等于最大值时，说明这条path是合法的
@@ -554,10 +554,10 @@ class Solution {
         }
         helper(root.left, max);
         helper(root.right, max);
-    }",,https://leetcode.com/problems/count-good-nodes-in-binary-tree/description/
-98,Validate Binary Search Tree,BST,3mins,"carry a range, comparing the root’s value with range",,https://leetcode.com/problems/validate-binary-search-tree/description/
-230,Kth Smallest Element in a BST,BST,4mins,全局变量加上中序遍历,,https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
-105,Construct Binary Tree from Preorder and Inorder Traversal,Tree,5mins,后序遍历进行构造，需要利用hashmap查找坐标，这样才能算出左子树的长度，才能进行双指针的移动,,https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
+    }",,https://leetcode.com/problems/count-good-nodes-in-binary-tree/description/,
+98,Validate Binary Search Tree,BST,3mins,"carry a range, comparing the root’s value with range",,https://leetcode.com/problems/validate-binary-search-tree/description/,
+230,Kth Smallest Element in a BST,BST,4mins,全局变量加上中序遍历,,https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/,
+105,Construct Binary Tree from Preorder and Inorder Traversal,Tree,5mins,后序遍历进行构造，需要利用hashmap查找坐标，这样才能算出左子树的长度，才能进行双指针的移动,,https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/,
 124,Binary Tree Maximum Path Sum,Tree,5mins,"后序遍历，构建贡献值的概念 > 0
 
     private int maxSum;
@@ -574,7 +574,7 @@ class Solution {
         maxSum = Math.max(maxSum, left + right + root.val);
         if (left + root.val < 0 && right + root.val < 0) return 0;
         return left > right ? left + root.val : right + root.val;
-    }",,https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
+    }",,https://leetcode.com/problems/binary-tree-maximum-path-sum/description/,
 297,Serialize and Deserialize Binary Tree,Tree,"12mins
 
 需要一个delimiter用于分割，也需要当遇到null的时候，插入一个null的字符，这样，当我们重构tree的时候，遇见null string，说明我们应该返回null了
@@ -624,7 +624,7 @@ class Solution {
         node.left = left;
         node.right = right;
         return node;
-    }",,https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
+    }",,https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/,
 449,Serialize and Deserialize BST,BST,用297的算法能过，但是没有利用 bst的性质 ：左大右小,"    private int p = 0;
     
     // Encodes a tree to a single string.
@@ -668,7 +668,7 @@ class Solution {
         root.left = toTreeNodePreorderTraversal(tokens, min, currVal);
         root.right = toTreeNodePreorderTraversal(tokens, currVal, max);
         return root;
-    }",,https://leetcode.com/problems/serialize-and-deserialize-bst/description/
+    }",,https://leetcode.com/problems/serialize-and-deserialize-bst/description/,
 208,Implement Trie (Prefix Tree),Trie,5mins,"class TrieNode {
        public Map<Character, TrieNode> children;
        public boolean isEnd;
@@ -678,13 +678,13 @@ class Solution {
     }
 }
 
-模版题",,https://leetcode.com/problems/implement-trie-prefix-tree/description/
+模版题",,https://leetcode.com/problems/implement-trie-prefix-tree/description/,
 211,Design Add and Search Words Data Structure,Trie,12mins,"因为带pattern，那么我们就需要把每一种可能进行搜索，dfs
 
-for循环",,https://leetcode.com/problems/design-add-and-search-words-data-structure/description/
-212,Word Search II,Trie,12mins,把所要求的word放入trie，然后再进行搜索,,https://leetcode.com/problems/word-search-ii/description/
-703,Kth Largest Element in a Stream,PriorityQueue,5mins,kth largest element in the sorted order → 用最小堆，保持队列的个数，队列头就是第k大的数字,,https://leetcode.com/problems/kth-largest-element-in-a-stream/
-1046,Last Stone Weight,PriorityQueue,2mins,,,https://leetcode.com/problems/last-stone-weight/description/
+for循环",,https://leetcode.com/problems/design-add-and-search-words-data-structure/description/,
+212,Word Search II,Trie,12mins,把所要求的word放入trie，然后再进行搜索,,https://leetcode.com/problems/word-search-ii/description/,
+703,Kth Largest Element in a Stream,PriorityQueue,5mins,kth largest element in the sorted order → 用最小堆，保持队列的个数，队列头就是第k大的数字,,https://leetcode.com/problems/kth-largest-element-in-a-stream/,
+1046,Last Stone Weight,PriorityQueue,2mins,,,https://leetcode.com/problems/last-stone-weight/description/,
 973,K Closest Points to Origin,QuickSelect,15mins,"对距离进行比较
 
     private int resIdx;
@@ -735,7 +735,7 @@ for循环",,https://leetcode.com/problems/design-add-and-search-words-data-struc
         int x = coordinate[0], y = coordinate[1];
         return Math.sqrt(x * x + y * y);
     }","• Time Complexity: O(N) in average case and O(N2) in the worst case, where N is the length of points.
-• Space Complexity: O(N).",https://leetcode.com/problems/k-closest-points-to-origin/description/
+• Space Complexity: O(N).",https://leetcode.com/problems/k-closest-points-to-origin/description/,
 215,Kth Largest Element in an Array,QuickSelect,15mins,"    private int resIdx;
     private Random random;
     public int findKthLargest(int[] nums, int k) {
@@ -772,7 +772,7 @@ for循环",,https://leetcode.com/problems/design-add-and-search-words-data-struc
         int temp = nums[x];
         nums[x] = nums[y];
         nums[y] = temp;
-    }",,https://leetcode.com/problems/kth-largest-element-in-an-array/
+    }",,https://leetcode.com/problems/kth-largest-element-in-an-array/,
 621,Task Scheduler,PriorityQueue,"15mins
 
 need to pay attention on timestamp + 1","class Solution {
@@ -813,7 +813,7 @@ class Task {
         this.task = task;
         this.num = num;
     }
-}",,https://leetcode.com/problems/task-scheduler/description/
+}",,https://leetcode.com/problems/task-scheduler/description/,
 295,Find Median from Data Stream,PriorityQueue,"leftPart是大顶堆，rightPart是小顶堆
 
 始终保持leftpart的个数比rightpart多一个","    private PriorityQueue<Integer> leftPart;
@@ -838,7 +838,7 @@ class Task {
             return (leftPart.peek() + rightPart.peek()) / 2.0;
         }
         return leftPart.peek();
-    }",,https://leetcode.com/problems/find-median-from-data-stream/description/
+    }",,https://leetcode.com/problems/find-median-from-data-stream/description/,
 90,Subsets II,Backtracking,sort → 去掉重复组合,"    public List<List<Integer>> subsetsWithDup(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<>();
@@ -856,7 +856,7 @@ class Task {
             backtracking(nums, res, list, i + 1);
             list.remove(list.size() - 1);
         }
-    }",,https://leetcode.com/problems/subsets-ii/description/
+    }",,https://leetcode.com/problems/subsets-ii/description/,
 40,Combination Sum II,Backtracking,在于如何prune,"    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         Arrays.sort(candidates);
         List<List<Integer>> res = new ArrayList<>();
@@ -877,13 +877,13 @@ class Task {
             backtracking(candidates, res, list, target, sum + curr, i + 1);
             list.remove(list.size() - 1);
         }
-    }",,https://leetcode.com/problems/combination-sum-ii/
+    }",,https://leetcode.com/problems/combination-sum-ii/,
 79,Word Search,Backtracking,10mins,"if (start == word.length()) return true;
-if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(start) != board[x][y] || board[x][y] == '.') return false;",,https://leetcode.com/problems/word-search/
-78,Subsets,Backtracking,2mins,,,https://leetcode.com/problems/subsets/description/
-39,Combination Sum,Backtracking,3mins,,,https://leetcode.com/problems/combination-sum/description/
-46,Permutations,Backtracking,5mins,需要一个visited来记录已经存放过的位置，和combination不一样，这个不需要start,,https://leetcode.com/problems/permutations/description/
-131,Palindrome Partitioning,Backtracking,5mins,先使用中心扩展法，对token进行预处理，再使用backtracking,,https://leetcode.com/problems/palindrome-partitioning/description/
+if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(start) != board[x][y] || board[x][y] == '.') return false;",,https://leetcode.com/problems/word-search/,
+78,Subsets,Backtracking,2mins,,,https://leetcode.com/problems/subsets/description/,
+39,Combination Sum,Backtracking,3mins,,,https://leetcode.com/problems/combination-sum/description/,
+46,Permutations,Backtracking,5mins,需要一个visited来记录已经存放过的位置，和combination不一样，这个不需要start,,https://leetcode.com/problems/permutations/description/,
+131,Palindrome Partitioning,Backtracking,5mins,先使用中心扩展法，对token进行预处理，再使用backtracking,,https://leetcode.com/problems/palindrome-partitioning/description/,
 17,Letter Combinations of a Phone Number,Backtracking,8mins,"先使用map进行查找，再使用backtracking进行组合
 
     public List<String> letterCombinations(String digits) {
@@ -913,7 +913,7 @@ if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(s
             backtracking(res, sb, digits, map, idx + 1);
             sb.setLength(sb.length() - 1);
         }
-    }",,https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/
+    }",,https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/,
 51,N-Queens,Backtracking,15mins,"根据row来进行填补
 
 检查左右对角线，和正上部分
@@ -969,8 +969,8 @@ if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(s
             if (chessboard[i][col] == 'Q') return false;
         }
         return true;
-    }",,https://leetcode.com/problems/n-queens/description/
-200,Number of Islands,Graph,2mins,,,https://leetcode.com/problems/number-of-islands/description/
+    }",,https://leetcode.com/problems/n-queens/description/,
+200,Number of Islands,Graph,2mins,,,https://leetcode.com/problems/number-of-islands/description/,
 133,Clone Graph,"BFS, Graph","10mins
 
 没有创建过的才放入bfs queue中，防止尝试死循环","    public Node cloneGraph(Node node) {
@@ -992,8 +992,8 @@ if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(s
             }
         }
         return copyMap.get(node);
-    }",,https://leetcode.com/problems/clone-graph/description/
-695,Max Area of Island,Graph,2mins,,,https://leetcode.com/problems/max-area-of-island/description/
+    }",,https://leetcode.com/problems/clone-graph/description/,
+695,Max Area of Island,Graph,2mins,,,https://leetcode.com/problems/max-area-of-island/description/,
 417,Pacific Atlantic Water Flow,Graph,"15mins
 
 从边界开始dfs","    public List<List<Integer>> pacificAtlantic(int[][] heights) {
@@ -1029,7 +1029,7 @@ if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(s
         dfs(ocean, heights, x - 1, y, heights[x][y]);
         dfs(ocean, heights, x, y + 1, heights[x][y]);
         dfs(ocean, heights, x, y - 1, heights[x][y]);
-    }",O(M * N),https://leetcode.com/problems/pacific-atlantic-water-flow/description/
+    }",O(M * N),https://leetcode.com/problems/pacific-atlantic-water-flow/description/,
 130,Surrounded Regions,Graph,"6mins
 
 也是从边界开始进行dfs","    public void solve(char[][] board) {
@@ -1060,7 +1060,7 @@ if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(s
         dfs(notCaptured, board, x - 1, y);
         dfs(notCaptured, board, x, y + 1);
         dfs(notCaptured, board, x, y - 1);
-    }",,https://leetcode.com/problems/surrounded-regions/description/
+    }",,https://leetcode.com/problems/surrounded-regions/description/,
 994,Rotting Oranges,"BFS, Graph","10mins
 
 这题tricky的地方在于考虑edge cases， 本是全部都是好的，那么min是0，return 0，如果有坏的 那么return min - 1
@@ -1099,10 +1099,10 @@ if (x < 0 || x >= board.length || y < 0 || y >= board[0].length || word.charAt(s
             }
         }
         return min == 0 ? 0 : min - 1;
-    }",O(M * N),https://leetcode.com/problems/rotting-oranges/description/
-286,Walls and Gates,Graph,5mins,最小距离都应该想到bfs,O(M * N),https://leetcode.com/problems/walls-and-gates/description/
-207,Course Schedule,Graph,6mins,使用map建立graph，再使用一个indegree map → bfs,,https://leetcode.com/problems/course-schedule/description/
-210,Course Schedule II,Graph,8mins,注意edge case,,https://leetcode.com/problems/course-schedule-ii/description/
+    }",O(M * N),https://leetcode.com/problems/rotting-oranges/description/,
+286,Walls and Gates,Graph,5mins,最小距离都应该想到bfs,O(M * N),https://leetcode.com/problems/walls-and-gates/description/,
+207,Course Schedule,Graph,6mins,使用map建立graph，再使用一个indegree map → bfs,,https://leetcode.com/problems/course-schedule/description/,
+210,Course Schedule II,Graph,8mins,注意edge case,,https://leetcode.com/problems/course-schedule-ii/description/,
 684,Redundant Connection,UnionFind,15mins,"主要注意find函数的书写
 
 public int find (int x) {
@@ -1113,9 +1113,9 @@ public int find (int x) {
         }
         // return已经被替换过的新root
        return parents[x];
-}",,https://leetcode.com/problems/redundant-connection/description/
-323,Number of Connected Components in an Undirected Graph,UnionFind,5mins,UF模版题,,https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/description/
-261,Graph Valid Tree,UnionFind,5mins,,,https://leetcode.com/problems/graph-valid-tree/description/
+}",,https://leetcode.com/problems/redundant-connection/description/,
+323,Number of Connected Components in an Undirected Graph,UnionFind,5mins,UF模版题,,https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/description/,
+261,Graph Valid Tree,UnionFind,5mins,,,https://leetcode.com/problems/graph-valid-tree/description/,
 127,Word Ladder,"BFS, Graph",15mins,"求最短距离和变换最少次数要想着使用bfs
 
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
@@ -1159,7 +1159,7 @@ public int find (int x) {
             res.add(new String(arr));
         }
         return res;
-    }",,https://leetcode.com/problems/word-ladder/description/
+    }",,https://leetcode.com/problems/word-ladder/description/,
 332,Reconstruct Itinerary,"DFS, Graph, Greedy","Forget → how to construct the map used to avoid duplicately search
 
 sort的目的 → 每次尝试都走最小的","    private int numCity;
@@ -1209,7 +1209,7 @@ sort的目的 → 每次尝试都走最小的","    private int numCity;
             res.remove(res.size() - 1);
         }
         return false;
-    }",,https://leetcode.com/problems/reconstruct-itinerary/description/
+    }",,https://leetcode.com/problems/reconstruct-itinerary/description/,
 1584,Min Cost to Connect All Points,"Graph, Greedy, UnionFind","Forget → 题目很好，很tricky
 
 最重要的是数组的构造","class Solution {
@@ -1275,7 +1275,7 @@ class UF {
         int rootY = find(y);
         return rootX == rootY;
     }
-}",,https://leetcode.com/problems/min-cost-to-connect-all-points/description/
+}",,https://leetcode.com/problems/min-cost-to-connect-all-points/description/,
 743,Network Delay Time,"Dijkstra, Graph",使用pq或者queue都是可以的,"    public int networkDelayTime(int[][] times, int n, int k) {
         Map<Integer, List<int[]>> graph = new HashMap<>();
         for (int[] time : times) {
@@ -1320,7 +1320,7 @@ class UF {
                 }
             }
         }
-    }",,https://leetcode.com/problems/network-delay-time/description/
+    }",,https://leetcode.com/problems/network-delay-time/description/,
 778,Swim in Rising Water,"BFS, Graph",用最小堆当作bfs queue用来取queue中的最大值,"    public int swimInWater(int[][] grid) {
         int rows = grid.length, cols = grid[0].length;
         int[][] dirs = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
@@ -1342,7 +1342,7 @@ class UF {
             }
         }
         return -1;
-    }",,https://leetcode.com/problems/swim-in-rising-water/description/
+    }",,https://leetcode.com/problems/swim-in-rising-water/description/,
 787,Cheapest Flights Within K Stops,"BFS, Graph","忘记了 bfs queue里面存放的具体内容
 
 应该存放: int[] {position, previous route cost}
@@ -1378,7 +1378,7 @@ bfs结束条件是层数和queue是否为空","    public int findCheapestPrice(
             steps++;
         }
         return costArr[dst] == Integer.MAX_VALUE ? -1 : costArr[dst];
-    }",,https://leetcode.com/problems/cheapest-flights-within-k-stops/description/
+    }",,https://leetcode.com/problems/cheapest-flights-within-k-stops/description/,
 269,Alien Dictionary,"BFS, Graph",拓扑排序,"    public String alienOrder(String[] words) {
         Map<Character, Integer> indegree = new HashMap<>();
         Map<Character, List<Character>> graph = new HashMap<>();
@@ -1426,9 +1426,9 @@ bfs结束条件是层数和queue是否为空","    public int findCheapestPrice(
             }
         }
         return res.length() == unique.size() ? res : """";
-    }",,https://leetcode.com/problems/alien-dictionary/description/
+    }",,https://leetcode.com/problems/alien-dictionary/description/,
 70,Climbing Stairs,1D Dynamic Programming,1mins,dp[i] = dp[i - 1] + dp[i - 2],"Space O(n)
-Time O(n)",https://leetcode.com/problems/climbing-stairs/
+Time O(n)",https://leetcode.com/problems/climbing-stairs/,
 746,Min Cost Climbing Stairs,1D Dynamic Programming,"这题一定要画图才能搞清楚
 
 没有想象中那么简单 → 把梯子画出来，横向的是层数，纵向的是cost
@@ -1449,9 +1449,9 @@ Time O(n)",https://leetcode.com/problems/climbing-stairs/
         // The final element in minimumCost refers to the top floor
         return minimumCost[minimumCost.length - 1];
     }","Space O(n)
-Time O(n)",https://leetcode.com/problems/min-cost-climbing-stairs/
+Time O(n)",https://leetcode.com/problems/min-cost-climbing-stairs/,
 198,House Robber,1D Dynamic Programming,3mins,注意edge case，如果没有住户 或者只有一个住户,"Space O(n)
-Time O(n)",https://leetcode.com/problems/house-robber/
+Time O(n)",https://leetcode.com/problems/house-robber/,
 213,House Robber II,1D Dynamic Programming,两种rob的方式，不同的range，所以要考虑不同的偏移量,"    public int rob(int[] nums) {
         if (nums.length == 0) return 0;
         if (nums.length == 1) return nums[0];
@@ -1471,7 +1471,7 @@ Time O(n)",https://leetcode.com/problems/house-robber/
         }
         return dp[n - 1];
     }","Space O(n)
-Time O(n)",https://leetcode.com/problems/house-robber-ii/
+Time O(n)",https://leetcode.com/problems/house-robber-ii/,
 5,Longest Palindromic Substring,Two Pointer,ExpandAroundCenter,"    public String longestPalindrome(String s) {
         String res = """";
         for (int i = 0; i < s.length(); i++) {
@@ -1492,9 +1492,9 @@ Time O(n)",https://leetcode.com/problems/house-robber-ii/
         }
         return s.substring(left + 1, right);
     }","Space O(1)
-Time O(n^2)",https://leetcode.com/problems/longest-palindromic-substring/description/
+Time O(n^2)",https://leetcode.com/problems/longest-palindromic-substring/description/,
 647,Palindromic Substrings,Two Pointer,ExpandAroundCenter,记录个数,"Space O(1)
-Time O(n^2)",https://leetcode.com/problems/palindromic-substrings/description/
+Time O(n^2)",https://leetcode.com/problems/palindromic-substrings/description/,
 91,Decode Ways,1D Dynamic Programming,"状态与选择
 
 只有两种选择 片段长度为1 或者 为2
@@ -1516,7 +1516,7 @@ Time O(n^2)",https://leetcode.com/problems/palindromic-substrings/description/
         }
         return dp[n];
     }","Space O(n)
-Time O(n)",https://leetcode.com/problems/decode-ways/description/
+Time O(n)",https://leetcode.com/problems/decode-ways/description/,
 322,Coin Change,完全背包,"amount 和 coin 谁在外层都没有影响
 
 二维dp：
@@ -1553,7 +1553,7 @@ Time O(n)",https://leetcode.com/problems/decode-ways/description/
         }
         return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
     }","Space O(n)
-Time O(n * m)",https://leetcode.com/problems/coin-change/
+Time O(n * m)",https://leetcode.com/problems/coin-change/,
 152,Maximum Product Subarray,1D Dynamic Programming,"自成一体 或者 和前面链接起来
 正负数的存在 → 所以需要min 和 max数组","    public int maxProduct(int[] nums) {
         int n = nums.length;
@@ -1573,7 +1573,7 @@ Time O(n * m)",https://leetcode.com/problems/coin-change/
         }
         return res;
     }","Space O(n)
-Time O(n)",https://leetcode.com/problems/maximum-product-subarray/description/
+Time O(n)",https://leetcode.com/problems/maximum-product-subarray/description/,
 139,Word Break,1D Dynamic Programming,动态规划和记忆搜索本质是一样的 → 动态规划是自底而上，记忆搜索是自上而下,"    public boolean wordBreak(String s, List<String> wordDict) {
         Set<String> wordDictSet = new HashSet<>(wordDict);
         int n = s.length();
@@ -1620,7 +1620,7 @@ Time O(n)",https://leetcode.com/problems/maximum-product-subarray/description/
         memo[idx] = 1;
         return false;
     }","Space O(n)
-Time O(n^2)",https://leetcode.com/problems/word-break/description/
+Time O(n^2)",https://leetcode.com/problems/word-break/description/,
 300,Longest Increasing Subsequence,"1D Dynamic Programming, Subsequence问题",最长的subsequence不一定在最后,"    public int lengthOfLIS(int[] nums) {
         int n = nums.length;
         if (n == 0) return 0;
@@ -1639,7 +1639,7 @@ Time O(n^2)",https://leetcode.com/problems/word-break/description/
         }
         return res;
     }","Space O(n)
-Time O(n^2)",https://leetcode.com/problems/longest-increasing-subsequence/description/
+Time O(n^2)",https://leetcode.com/problems/longest-increasing-subsequence/description/,
 416,Partition Equal Subset Sum,01背包,"二维dp
 
     public boolean canPartition(int[] nums) {
@@ -1685,7 +1685,7 @@ Time O(n^2)",https://leetcode.com/problems/longest-increasing-subsequence/descri
             }
         }
         return dp[amount];
-    }",,https://leetcode.com/problems/partition-equal-subset-sum/description/
+    }",,https://leetcode.com/problems/partition-equal-subset-sum/description/,
 62,Unique Paths,2D Dynamic Programming,2mins,"base case 
 for (int i = 0; i < m; i++) {
       dp[i][0] = 1;
@@ -1693,7 +1693,7 @@ for (int i = 0; i < m; i++) {
 for (int i = 0; i < n; i++) {
       dp[0][i] = 1;
 }","Space O(m * n)
-Time O(m * n)",https://leetcode.com/problems/unique-paths/description/
+Time O(m * n)",https://leetcode.com/problems/unique-paths/description/,
 1143,Longest Common Subsequence,2D Dynamic Programming,5mins,"双指针进行动态规划
 
     public int longestCommonSubsequence(String text1, String text2) {
@@ -1710,7 +1710,7 @@ Time O(m * n)",https://leetcode.com/problems/unique-paths/description/
         }
         return dp[m][n];
     }","Space O(m * n)
-Time O(m * n)",https://leetcode.com/problems/longest-common-subsequence/description/
+Time O(m * n)",https://leetcode.com/problems/longest-common-subsequence/description/,
 518,Coin Change II,完全背包,"二维dp
     public int change(int amount, int[] coins) {
         int n = coins.length;
@@ -1744,7 +1744,7 @@ Time O(m * n)",https://leetcode.com/problems/longest-common-subsequence/descript
         }
         return dp[amount];
     }","Space O(n)
-Time O(m * n)",https://leetcode.com/problems/coin-change-ii/description/
+Time O(m * n)",https://leetcode.com/problems/coin-change-ii/description/,
 ,,"01背包, 完全背包","两种不同背包的总结：
 
 01背包是物品只能使用一次；完全背包是物品可以使用多次。
@@ -1793,7 +1793,7 @@ for(int i = 0; i < weight.size(); i++) { // 遍历物品
     }
 }
 
-二维dp，只初始化dp[0][0]",,,
+二维dp，只初始化dp[0][0]",,,,
 494,Target Sum,01背包,"    public int findTargetSumWays(int[] nums, int target) {
         // 本质是416，划分子集
         int n = nums.length;
@@ -1846,7 +1846,7 @@ for(int i = 0; i < weight.size(); i++) { // 遍历物品
             }
         }
         return dp[amount];
-    }",,https://leetcode.com/problems/target-sum/description/
+    }",,https://leetcode.com/problems/target-sum/description/,
 97,Interleaving String,"2D Dynamic Programming, DFS",忘记了细节,"带记忆搜索的dfs
 
 对于两个不同的方向都可以进行查找
@@ -1892,7 +1892,7 @@ for(int i = 0; i < weight.size(); i++) { // 遍历物品
         }
         return dp[m][n];
     }","Time O(m * n)
-Space O(m * n)",https://leetcode.com/problems/interleaving-string/description/
+Space O(m * n)",https://leetcode.com/problems/interleaving-string/description/,
 121,"Best Time to Buy and Sell Stock
 
 只能进行一次售卖","2D Dynamic Programming, Greedy, 股票问题","因为只进行售卖一次，所以就是找到最大间距，使用贪心
@@ -1936,7 +1936,7 @@ dp[5][1]就是最终结果。
             max = Math.max(max, curr - minPrice);
         }
         return max;
-    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
+    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/,
 122,"Best Time to Buy and Sell Stock II
 
 可以进行多次售卖","2D Dynamic Programming, 股票问题",5mins,"    public int maxProfit(int[] prices) {
@@ -1955,7 +1955,7 @@ dp[5][1]就是最终结果。
         }
         // 卖出股票收益高于持有股票收益，因此取[0]
         return  dp[n - 1][1];
-    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/
+    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/,
 123,"Best Time to Buy and Sell Stock III
 
 规定了售卖次数，最多售卖2次",股票问题,因为是两次交易所以可以建立4个状态,"    public int maxProfit(int[] prices) {
@@ -1986,7 +1986,7 @@ dp[5][1]就是最终结果。
             dp[i][3] = Math.max(dp[i - 1][2] + prices[i], dp[i - 1][3]);
         }
         return dp[n - 1][3];
-    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/
+    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/,
 188,"Best Time to Buy and Sell Stock IV
 
 多次交易",股票问题,最多可以交易k次,"    public int maxProfit(int k, int[] prices) {
@@ -2010,7 +2010,7 @@ dp[5][1]就是最终结果。
             }
         }
         return dp[n - 1][k * 2 - 1];
-    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/
+    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/,
 309,"Best Time to Buy and Sell Stock with Cooldown
 
 是卖股票问题2的复杂版
@@ -2060,7 +2060,7 @@ dp[i][3] = dp[i - 1][2];","    public int maxProfit(int[] prices) {
         }
         // 取状态 1，2，3的最大值
         return Math.max(dp[n - 1][3], Math.max(dp[n - 1][1], dp[n - 1][2]));
-    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/
+    }",,https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/,
 329,Longest Increasing Path in a Matrix,DFS,"10mins → dfs + memo
 
  memo记录当前四个方向最长长度","   private int[][] memo;
@@ -2088,7 +2088,7 @@ dp[i][3] = dp[i - 1][2];","    public int maxProfit(int[] prices) {
         longest++;
         memo[x][y] = longest;
         return memo[x][y];
-    }",O(mn),https://leetcode.com/problems/longest-increasing-path-in-a-matrix/description/
+    }",O(mn),https://leetcode.com/problems/longest-increasing-path-in-a-matrix/description/,
 115,Distinct Subsequences,"2D Dynamic Programming, Subsequence问题, 编辑距离问题","这一类问题，基本是要分析两种情况
 • s[i - 1] 与 t[j - 1]相等
 • s[i - 1] 与 t[j - 1] 不相等
@@ -2140,7 +2140,7 @@ dp[0][0]应该是1，空字符串s，可以删除0个元素，变成空字符串
             }
         }
         return dp[m][n];
-    }",O(mn),https://leetcode.com/problems/distinct-subsequences/description/
+    }",O(mn),https://leetcode.com/problems/distinct-subsequences/description/,
 392,Is Subsequence,"2D Dynamic Programming, Subsequence问题, 编辑距离问题","可以完全套用115的模版
 
 ","    public boolean isSubsequence(String s, String t) {
@@ -2175,7 +2175,7 @@ dp[0][0]应该是1，空字符串s，可以删除0个元素，变成空字符串
             q++;
         }
         return p == s.length();
-    }",,https://leetcode.com/problems/is-subsequence/description/
+    }",,https://leetcode.com/problems/is-subsequence/description/,
 583,Delete Operation for Two Strings,"2D Dynamic Programming, Subsequence问题, 编辑距离问题","问题转化为找最长的公共序列
 
 和1143Longest Common Subsequence 一样的
@@ -2236,7 +2236,7 @@ if (word1[i - 1] == word2[j - 1]) {
             }
         }
         return dp[m][n];
-    }",,https://leetcode.com/problems/delete-operation-for-two-strings/description/
+    }",,https://leetcode.com/problems/delete-operation-for-two-strings/description/,
 72,Edit Distance,"2D Dynamic Programming, 编辑距离问题","• if (word1[i - 1] == word2[j - 1])
     ◦ 不操作
 • if (word1[i - 1] != word2[j - 1])
@@ -2269,7 +2269,7 @@ dp定义使得两个string相等的最少操作数量","    public int minDistan
             }
         }
         return dp[m][n];
-    }",,https://leetcode.com/problems/edit-distance/
+    }",,https://leetcode.com/problems/edit-distance/,
 312,Burst Balloons,2D Dynamic Programming,"经典问题但是很难
 
 关键在于如何保证子问题独立
@@ -2306,7 +2306,7 @@ dp定义使得两个string相等的最少操作数量","    public int minDistan
             }
         }
         return dp[0][n + 1];
-    }",,https://leetcode.com/problems/burst-balloons/description/
+    }",,https://leetcode.com/problems/burst-balloons/description/,
 53,Maximum Subarray,1D Dynamic Programming,2mins,"    public int maxSubArray(int[] nums) {
         int n = nums.length;
         if (n == 0) return 0;
@@ -2318,7 +2318,7 @@ dp定义使得两个string相等的最少操作数量","    public int minDistan
             res = Math.max(dp[i], res);
         }
         return res;
-    }",,https://leetcode.com/problems/maximum-subarray/description/
+    }",,https://leetcode.com/problems/maximum-subarray/description/,
 55,Jump Game,Greedy,这道题目关键点在于：不用拘泥于每次究竟跳几步，而是看覆盖范围，覆盖范围内一定是可以跳过来的，不用管是怎么跳的。,"    public boolean canJump(int[] nums) {
         int n = nums.length;
         if (n == 0 || n == 1) return true;
@@ -2328,7 +2328,7 @@ dp定义使得两个string相等的最少操作数量","    public int minDistan
             if (coverRange >= n - 1) return true;
         }
         return false;
-    }",,https://leetcode.com/problems/jump-game/
+    }",,https://leetcode.com/problems/jump-game/,
 45,Jump Game II,Greedy,"要记录跳跃的最少步数
 
 那么需要一个boundary
@@ -2352,7 +2352,7 @@ dp定义使得两个string相等的最少操作数量","    public int minDistan
             if (boundary >= n - 1) return steps;
         }
         return -1;
-    }",,https://leetcode.com/problems/jump-game-ii/
+    }",,https://leetcode.com/problems/jump-game-ii/,
 134,"Gas Station
 
 理解了，但是需要重复，要不然要忘记
@@ -2376,7 +2376,7 @@ i从0开始累加rest[i]，和记为curSum，一旦curSum小于零，说明[0, i
         }
         if (totalRest < 0) return -1; // 还是会断油
         return start;
-    }",,https://leetcode.com/problems/gas-station/description/
+    }",,https://leetcode.com/problems/gas-station/description/,
 846， 1296,Hand of Straights,"Greedy, HashMap","    public boolean isPossibleDivide(int[] nums, int k) {
         int n = nums.length;
         if (n % k != 0) return false;
@@ -2419,7 +2419,7 @@ i从0开始累加rest[i]，和记为curSum，一旦curSum小于零，说明[0, i
             hm.put(card, hm.get(card) - 1);
         }
         return true;
-    }",nlogn,https://leetcode.com/problems/hand-of-straights/description/
+    }",nlogn,https://leetcode.com/problems/hand-of-straights/description/,
 1899,Merge Triplets to Form Target Triplet,Greedy,这道题的解法很有趣！,"    public boolean mergeTriplets(int[][] triplets, int[] target) {
         boolean[] greedy = new boolean[3];
         loop:for (int[] triplet : triplets) {
@@ -2434,7 +2434,7 @@ i从0开始累加rest[i]，和记为curSum，一旦curSum小于零，说明[0, i
             }
         }  
         return greedy[0] && greedy[1] && greedy[2];
-    }",o(n),https://leetcode.com/problems/merge-triplets-to-form-target-triplet/description/
+    }",o(n),https://leetcode.com/problems/merge-triplets-to-form-target-triplet/description/,
 763,Partition Labels,Greedy,当前部分已经包含所有在此部分中的char时，那么我们可以进行分割,"    public List<Integer> partitionLabels(String s) {
         Map<Character, Integer> cnt = new HashMap<>();
         for (char c : s.toCharArray()) {
@@ -2457,7 +2457,7 @@ i从0开始累加rest[i]，和记为curSum，一旦curSum小于零，说明[0, i
         }
         return res;
     }","O(N)
-O(N)",https://leetcode.com/problems/partition-labels/description/
+O(N)",https://leetcode.com/problems/partition-labels/description/,
 678,Valid Parenthesis String,"Greedy, Stack","括号匹配的题可以使用stack来解决
 
 使用两个stack分别储存星号和左括号
@@ -2500,7 +2500,307 @@ O(N)",https://leetcode.com/problems/partition-labels/description/
         }
         return true;
     }","O(N)
-O(N)",https://leetcode.com/problems/valid-parenthesis-string/description/
-,,,,,,
-,,,,,,
-,,,,,,
+O(N)",https://leetcode.com/problems/valid-parenthesis-string/description/,
+57,Insert Interval,Interval,"We need to iterate the intervals array to determine where we insert the current interval. At the same time, we will compare their boundaries with the new interval.","    public int[][] insert(int[][] intervals, int[] newInterval) {
+        int n = intervals.length;
+        int p = 0;
+        LinkedList<int[]> merged = new LinkedList<>();
+        // 分三步进行merge，new interval不动，循环的是intervals
+        while (p < n && intervals[p][1] < newInterval[0]) {
+            merged.addLast(intervals[p]);
+            p++;
+        }
+        // 更新new interval
+        while (p < n && intervals[p][0] <= newInterval[1] && intervals[p][1] >= newInterval[0]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[p][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[p][1]);
+            p++;
+        }
+        // 插入new interval
+        merged.addLast(newInterval);
+        // 插入右边
+        while (p < n) {
+            merged.add(intervals[p]);
+            p++;
+        }
+        int[][] res = new int[merged.size()][2];
+        int i = 0;
+        for (int[] info : merged) {
+            res[i][0] = info[0];
+            res[i][1] = info[1];
+            i++; 
+        }
+        return res;
+    }",,https://leetcode.com/problems/insert-interval/description/,
+56,Merge Intervals,Interval,,"    public int[][] merge(int[][] intervals) {
+        int n = intervals.length;
+        if (n == 0) return new int[][]{{}};
+        Arrays.sort(intervals, (n1, n2) -> n1[0] - n2[0]);
+        LinkedList<int[]> merged = new LinkedList<>();
+        merged.addLast(intervals[0]);
+        for (int i = 1; i < n; i++) {
+            int[] curr = intervals[i];
+            int left = curr[0], right = curr[1];
+            if (merged.getLast()[1] >= left) {
+                merged.getLast()[1] = Math.max(merged.getLast()[1], right);
+            } else {
+                merged.addLast(curr);
+            }
+        }
+        int[][] res = new int[merged.size()][2];
+        int i = 0;
+        for (int[] info : merged) {
+            res[i][0] = info[0];
+            res[i][1] = info[1];
+            i++; 
+        }
+        return res;
+    }",,https://leetcode.com/problems/merge-intervals/,
+435,Non-overlapping Intervals,Interval,,"    public int eraseOverlapIntervals(int[][] intervals) {
+        LinkedList<int[]> merged = new LinkedList<>();
+        Arrays.sort(intervals, (n1, n2) -> n1[0] - n2[0]);
+        merged.addLast(intervals[0]);
+        int n = intervals.length;
+        int cnt = 0;
+        for (int i = 1; i < n; i++) {
+            int[] prev = merged.getLast(), curr = intervals[i];
+            int prevRight = prev[1], currLeft = curr[0], currRight = curr[1];
+            // 相交
+            if (prevRight > currLeft) {
+                // 保留右边界靠左的，贪心思想：使得后面相交的概率最低
+                // prev[1] = Math.min(currRight, prevRight); // 不能考虑左边界，不影响结果
+                if (prevRight > currRight) {
+                    merged.removeLast();
+                    merged.addLast(curr);
+                }
+                cnt++;
+            } else {
+                merged.addLast(curr);
+            }
+        }
+        return cnt++;
+    }",,https://leetcode.com/problems/non-overlapping-intervals/description/,
+252,Meeting Rooms,Interval,,"    public boolean canAttendMeetings(int[][] intervals) {
+        if (intervals.length == 0) return true;
+        Arrays.sort(intervals, (n1, n2) -> n1[0] - n2[0]);
+        int right = intervals[0][1];
+        for (int i = 1; i < intervals.length; i++) {
+            if (right > intervals[i][0]) return false;
+            right = intervals[i][1];
+        }
+        return true;
+    }",,https://leetcode.com/problems/meeting-rooms/,
+253,Meeting Rooms II,Interval,"理解双指针的方法
+
+红色的点代表每个会议的开始时间点，绿色的点代表每个会议的结束时间点。
+现在假想有一条带着计数器的线，在时间线上从左至右进行扫描，每遇到红色的点，计数器 count 加一，每遇到绿色的点，计数器 count 减一
+
+    public int minMeetingRooms(int[][] intervals) {
+        int n = intervals.length;
+        int[] starts = new int[n];
+        int[] ends = new int[n];
+        for (int i = 0; i < n; i++) {
+            starts[i] = intervals[i][0];
+            ends[i] = intervals[i][1];
+        }
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+        int p1 = 0, p2 = 0;
+        int cnt = 0, res = 0;
+        while (p1 < n && p2 < n) {
+            if (starts[p1] < ends[p2]) {
+                cnt++;
+                p1++;
+            } else {
+                cnt--;
+                p2++;
+            }
+            res = Math.max(cnt, res);
+        }
+        return res;
+    }","    public int minMeetingRooms(int[][] intervals) {
+        if (intervals.length == 0) return 0;
+        Arrays.sort(intervals, (n1, n2) -> n1[0] - n2[0]);
+        PriorityQueue<Integer> rooms = new PriorityQueue<>();
+        int cnt = 0;
+        for (int[] interval : intervals) {
+            if (!rooms.isEmpty() && interval[0] >= rooms.peek()) {
+                rooms.poll();
+            } 
+            rooms.offer(interval[1]);
+            cnt = Math.max(cnt, rooms.size());
+        }
+        return cnt;
+    }",,https://leetcode.com/problems/meeting-rooms-ii/description/,
+1851,Minimum Interval to Include Each Query,Interval,,,,https://leetcode.com/problems/minimum-interval-to-include-each-query/,
+48,Rotate Image,Math & Geometry,对角线旋转，再左右旋转,"    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            int left = 0, right = n - 1;
+            while (left < right) {
+                int temp = matrix[i][left];
+                matrix[i][left] = matrix[i][right];
+                matrix[i][right] = temp;
+                left++;
+                right--;
+            }
+        }
+
+    }",,https://leetcode.com/problems/rotate-image/,
+54,Spiral Matrix,Math & Geometry,需要一个keepup的变量保持向上移动,"    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        dfs(matrix, new boolean[matrix.length][matrix[0].length], res, 0, 0, false);
+        return res;
+    }
+
+    public void dfs(int[][] matrix, boolean[][] visited, List<Integer> res, int x, int y, boolean keepUp) {
+        if (x < 0 || x >= matrix.length || y < 0 || y >= matrix[0].length || visited[x][y]) return;
+        visited[x][y] = true;
+        res.add(matrix[x][y]);
+        if (keepUp) {
+            dfs(matrix, visited, res, x - 1, y, true);
+        }
+        dfs(matrix, visited, res, x, y + 1, false);
+        dfs(matrix, visited, res, x + 1, y, false);
+        dfs(matrix, visited, res, x, y - 1, false);
+        dfs(matrix, visited, res, x - 1, y, true);
+    }",,https://leetcode.com/problems/spiral-matrix/,
+73,Set Matrix Zeroes,Math & Geometry,"这题和数独一样需要辅助rows,cols来进行记录
+
+这样才能进行对应变换","    public void setZeroes(int[][] matrix) {
+        int m = matrix.length, n = matrix[0].length;
+        int[] rows = new int[m], cols = new int[n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    rows[i] = 1;
+                    cols[j] = 1;
+                }
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            if (rows[i] == 1) {
+                for (int j = 0; j < n; j++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        for (int j = 0; j < n; j++) {
+            if (cols[j] == 1) {
+                for (int i = 0; i < m; i++) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }",,,
+202,Happy Number,Math & Geometry,,"    public boolean isHappy(int n) {
+        int slow = n, fast = n;
+        while (slow != 1) {
+            slow = operate(slow);
+            fast = operate(operate(fast));
+            // 循环且不包含1
+            if (slow == fast && slow != 1) return false;
+        }
+        return true;
+    }
+
+    public int operate(int num) {
+        int sum = 0;
+        while (num != 0) {
+            int r = num % 10;
+            sum += r * r;
+            num /= 10;
+        }
+        return sum;
+    }",logn,https://leetcode.com/problems/happy-number/,
+66,Plus One,Math & Geometry,,"    public int[] plusOne(int[] digits) {
+        LinkedList<Integer> list = new LinkedList<>();
+        int n = digits.length;
+        digits[n - 1]++;
+        int carry = 0;
+        for (int i = digits.length - 1; i >= 0; i--) {
+            int sum = digits[i] + carry;
+            list.addFirst(sum % 10);
+            carry = sum / 10;
+        }
+        if (carry != 0) {
+            list.addFirst(carry);
+        }
+        int[] res = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }",,https://leetcode.com/problems/plus-one/description/,
+50,"Pow(x, n)",Math & Geometry,"注意edge case的处理
+把 n 是 INT_MIN 的情况单独拿出来处理
+避免 -n 整型溢出","    public double myPow(double x, int n) {
+        if (n == Integer.MIN_VALUE) {
+            //  把 n 是 INT_MIN 的情况单独拿出来处理
+            // 避免 -n 整型溢出
+            return myPow(1 / x, -(n + 1)) / x; // 少了一次，所以再除一次
+        }
+        if (n < 0) return myPow(1 / x, -n);
+        if (n == 0) return 1.0;
+        int num = n / 2;
+        double temp = myPow(x, num);
+        if (n % 2 != 0) return temp * temp * x;
+        return temp * temp;
+    }",logn,https://leetcode.com/problems/powx-n/description/,
+43,Multiply Strings,Math & Geometry,"对于比较小的数字，做运算可以直接使用编程语言提供的运算符，但是如果相乘的两个因数非常大，语言提供的数据类型可能就会溢出。一种替代方案就是，运算数以字符串的形式输入，然后模仿我们小学学习的乘法算术过程计算出结果，并且也用字符串表示。
+
+
+Sum the products from all pairs of digits
+难点在于理解利用辅助数组进行叠加","    public String multiply(String num1, String num2) {
+        if (num1.equals(""0"") || num2.equals(""0"")) return ""0"";
+        int m = num1.length(), n = num2.length();
+        int[] result = new int[m + n];
+        // 99 * 9
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
+                int mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+                // add previous carry flag
+                int sum = mul + result[i + j + 1];
+                // digit
+                result[i + j + 1] = sum % 10;
+                // update next carry flag
+                result[i + j] += sum / 10;
+            }
+        }
+        int idx = 0;
+        //remove prefix 0
+        if (result[idx] == 0) idx++;
+        StringBuilder sb = new StringBuilder();
+        for (int i = idx; i < result.length; i++) sb.append(result[i]);
+        return sb.toString();
+    }","O(m*n)
+
+O(m + n)",https://leetcode.com/problems/multiply-strings/description/,
+136,Single Number,Bit Manipulation,XOR,,,https://leetcode.com/problems/single-number/description/,
+191,Number of 1 Bits,Bit Manipulation,"AND
+n & (n - 1) → remove the last ‘1’",,,https://leetcode.com/problems/number-of-1-bits/,
+338,Counting Bits,Bit Manipulation,"AND
+n & (n - 1) → remove the last ‘1’
+
+利用这个操作，使用dp，因为n & (n - 1) 这个数字一定比n小，说明之前一定已经计算出来了
+
+","    public int[] countBits(int n) {
+        int[] dp = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            dp[i] = dp[i & (i - 1)] + 1;
+        }
+        return dp;
+    }",O(n),https://leetcode.com/problems/counting-bits/description/,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
